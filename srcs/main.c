@@ -69,35 +69,6 @@ void	ft_line(t_env *env, t_coords a, t_coords b, int clr)
 	}
 }
 
-void	ft_line_b(t_env *env, t_coords a, t_coords b, int clr)
-{
-	t_draw line;
-
-	line.dx = abs(b.x - a.x);
-	line.sx = a.x < b.x ? 1 : -1;
-	line.dy = abs(b.y - a.y);
-	line.sy = a.y < b.y ? 1 : -1;
-	line.err = (line.dx > line.dy ? line.dx : -(line.dy)) / 2;
-	while (1)
-	{
-		if ((a.x >= 0 && a.x <= WIN_WIDTH) && (a.y >= 0 && a.y <= WIN_HEIGHT))
-			env->img_datas[a.x + a.y * WIN_WIDTH] = clr;
-		if (a.x == b.x && a.y == b.y)
-			break ;
-		line.e2 = line.err;
-		if (line.e2 > -(line.dx))
-		{
-			line.err -= line.dy;
-			a.x += line.sx;
-		}
-		if (line.e2 < line.dy)
-		{
-			line.err += line.dx;
-			a.y += line.sy;
-		}
-	}
-}
-
 int			ft_hooks(int keycode, t_all *all)
 {
 	if (keycode == 53)
@@ -136,8 +107,14 @@ int			ft_hooks(int keycode, t_all *all)
 		all->p->planeX = all->p->planeX * cos(all->p->rotSpeed) - all->p->planeY * sin(all->p->rotSpeed);
 		all->p->planeY = oldPlaneX * sin(all->p->rotSpeed) + all->p->planeY * cos(all->p->rotSpeed);
 	}
-	printf("plane.x = %f\n", all->p->dirX);
-	printf("plane.y = %f\n", all->p->dirY);
+	if (keycode == 49)
+	{
+		all->e->clr = BLUE;
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
+	}
+	printf("dir.x = %f\n", all->p->dirY);
+	printf("dir.y = %f\n", all->p->dirY);
+	printf("rot. = %f\n", all->p->rotSpeed);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
 	printf("keycode = %d\n", keycode);
 	return (0);
@@ -154,7 +131,9 @@ int		main(void)
 	t_all all;
 
 	player.moveSpeed = 5;
+	player.rotSpeed = 5;
 	printf("player. = %f\n", player.moveSpeed);
+	printf("rot. = %f\n", player.rotSpeed);
 	all.e = &env;
 	all.p = &player;
 	all.m = &map;
@@ -173,6 +152,7 @@ int		main(void)
 	env.clr = WHITE;
 	for (int x = 0; x < WIN_WIDTH; x++)
 	{
+		printf("edefe\n");
 		player.camX = 2 * x / (double)WIN_WIDTH - 1;
 		player.rayPosX = player.posX; 
 		player.rayPosY = player.posY;
@@ -232,17 +212,16 @@ int		main(void)
 		map.drawEnd = map.lineHeight / 2 + WIN_HEIGHT / 2;
 		if (map.drawEnd >= WIN_HEIGHT)
 			map.drawEnd = WIN_HEIGHT - 1;
-		if (worldMap[map.mapX][map.mapY] == 1)
-			map.clr = BLUE;
+		// if (worldMap[map.mapX][map.mapY] == 1)
+			// map.clr = BLUE;
 		a.x = x;
 		a.y = map.drawStart;
 		b.x = x;
 		b.y = map.drawEnd;
 		if (map.side == 1)
-			ft_line(&env, a, b, env.clr);
+			ft_line(&env, a, b, all.e->clr);
 		else
-			ft_line_b(&env, a, b, env.clr / 2);
-		mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
+			ft_line(&env, a, b, all.e->clr / 2);
 	}
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
