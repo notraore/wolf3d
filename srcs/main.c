@@ -40,6 +40,22 @@ int worldMap[24][24]=
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
+int	get_color(t_all *all)
+{
+	if (all->m->side)
+	{
+		if ((all->m->stepX == -1 && all->m->stepY == -1) ||
+	 	   (all->m->stepX == 1 && all->m->stepY == 1))
+			return (RED);
+		if ((all->m->stepX == -1 && all->m->stepY == 1) ||
+	  	  (all->m->stepX == 1 && all->m->stepY == 1))
+			return (WHITE);
+	}
+	if ((all->m->stepX == -1 && all->m->stepY == -1 ||
+	    all->m->stepX == -1 && all->m->stepY == 1))
+		return (GREEN);
+}
+
 void	ft_line(t_all *all, int x, int start, int end)
 {
 	int i;
