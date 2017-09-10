@@ -234,8 +234,8 @@ void	init_player(t_all *all)
 	all->p->planeY = 0.66;
 	all->p->last_frame = clock();
 	all->p->next_frame = 0;
-	all->p->moveSpeed = 0.05;
-	all->p->rotSpeed = 0.05;
+	all->p->moveSpeed = 0.10;
+	all->p->rotSpeed = 0.10;
 }
 
 int		ft_loop(t_all *all)
