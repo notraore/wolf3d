@@ -38,22 +38,22 @@ typedef struct s_coords t_coords;
 
 struct                    s_ply
 {
-    double  posX;
-    double  posY;
-    double  dirX;
-    double  dirY;
-    double  oldX;
-    double  planeX;
-    double  planeY;
-    double  camX;
-    double  rayPosX;
-    double  rayPosY;
-    double  rayDirX;
-    double  rayDirY;
-    double  moveSpeed;
-    double  rotSpeed;
-    clock_t  last_frame;
-    clock_t  next_frame;
+	double  posX;
+	double  posY;
+	double  dirX;
+	double  dirY;
+	double  oldX;
+	double  planeX;
+	double  planeY;
+	double  camX;
+	double  rayPosX;
+	double  rayPosY;
+	double  rayDirX;
+	double  rayDirY;
+	double  moveSpeed;
+	double  rotSpeed;
+	clock_t  last_frame;
+	clock_t  next_frame;
 
 
 
@@ -61,21 +61,21 @@ struct                    s_ply
 
 struct         s_map
 {
-    int     mapX;
-    int     mapY;
-    int     sideDistX;
-    int     sideDistY;
-    int     deltaDistX;
-    int     deltaDistY;
-    int     stepX;
-    int     stepY;
-    int     hit;
-    int     side;
-    double  perpWallDist;
-    int     lineHeight;
-    int     drawEnd;
-    int     drawStart;
-    int     clr;
+	int     mapX;
+	int     mapY;
+	int     sideDistX;
+	int     sideDistY;
+	int     deltaDistX;
+	int     deltaDistY;
+	int     stepX;
+	int     stepY;
+	int     hit;
+	int     side;
+	double  perpWallDist;
+	int     lineHeight;
+	int     drawEnd;
+	int     drawStart;
+	int     clr;
 };
 
 struct		    s_draw
@@ -96,32 +96,57 @@ struct		    s_coords
 
 struct       s_env
 {
-    void    *mlx;
-    void    *win;
-    void    *img;
-    int     *img_datas;
-    int     bpp;
-    int     sl;
-    int     end;
-    int     clr;
+	void    *mlx;
+	void    *win;
+	void    *img;
+	int     *img_datas;
+	int     bpp;
+	int     sl;
+	int     end;
+	int     clr;
 };
 
 struct          s_all
 {
-    t_env       *e;
-    t_map       *m;
-    t_draw      *d;
-    t_ply       *p;
-    t_coords    *cora;
-    t_coords    *corb;
+	t_env       *e;
+	t_map       *m;
+	t_draw      *d;
+	t_ply       *p;
+	t_coords    *cora;
+	t_coords    *corb;
 };
 
+/*
+**movement_input.c
+*/
+void        forward_vector(t_all *all);
+void        back_vector(t_all *all);
+void        rot_right(t_all *all);
+void        rot_left(t_all *all);
 
+/*
+**raycasting.c
+*/
+void        step_side_nbr(t_all *all);
+void        ray_lenght(t_all *all);
+void        ray_draw(t_all *all, int x);
+void        raycast(t_all *all);
+int         ft_loop(t_all *all);
+
+/*
+**inits.c
+*/
+void        all_init(t_all *all, int x);
+void        init_player(t_all *all);
+
+/*
+**ft_line_and_color.c
+*/
+void        ft_line(t_all *all, int x, int start, int end);
+int         get_color(t_all *all);
 
 int     ft_hooks(int keycode, t_all *all);
-int    ft_game(t_all *all);
-int         ft_hooks(int keycode, t_all *all);
+int     ft_game(t_all *all);
 void    ft_line(t_all *all, int x, int start, int end);
-void    redraw(t_all *all);
 
 #endif

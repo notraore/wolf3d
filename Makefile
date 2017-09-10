@@ -12,8 +12,9 @@
 
 NAME=wolf3d
 CC=gcc
-SRC=srcs/main.c
-OBJ=main.o
+SRC=srcs/main.c srcs/keyboard.c srcs/inits.c srcs/ft_line_and_color.c\
+srcs/raycasting.c srcs/movement_input.c
+OBJ=main.o movement_input.o inits.o ft_line_and_color.o raycasting.o keyboard.o
 FLAGS=-Wall -Wextra -Werror
 LIB=-L ./libft -lft
 MLX=-L ./miniLibx -l mlx -framework OpenGL -framework AppKit
