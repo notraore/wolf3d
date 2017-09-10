@@ -13,8 +13,8 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 720
 
 # define K_ESC 53
 # define RED 0xFF0000
@@ -25,6 +25,7 @@
 # include "./libft/libft.h"
 # include "./minilibx/mlx.h"
 # include <math.h>
+# include <time.h>
 # include <stdbool.h>
 
 typedef struct s_all    t_all;
@@ -41,6 +42,7 @@ struct                    s_ply
     double  posY;
     double  dirX;
     double  dirY;
+    double  oldX;
     double  planeX;
     double  planeY;
     double  camX;
@@ -50,6 +52,11 @@ struct                    s_ply
     double  rayDirY;
     double  moveSpeed;
     double  rotSpeed;
+    clock_t  last_frame;
+    clock_t  next_frame;
+
+
+
 };
 
 struct         s_map
@@ -87,7 +94,7 @@ struct		    s_coords
 	int				y;
 };
 
-struct                   s_env
+struct       s_env
 {
     void    *mlx;
     void    *win;
@@ -105,10 +112,16 @@ struct          s_all
     t_map       *m;
     t_draw      *d;
     t_ply       *p;
+    t_coords    *cora;
+    t_coords    *corb;
 };
 
 
 
 int     ft_hooks(int keycode, t_all *all);
+int    ft_game(t_all *all);
+int         ft_hooks(int keycode, t_all *all);
+void    ft_line(t_all *all, int x, int start, int end);
+void    redraw(t_all *all);
 
 #endif
