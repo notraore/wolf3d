@@ -3,179 +3,250 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nghaddar <nghaddar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/08 12:22:17 by notraore          #+#    #+#             */
-/*   Updated: 2017/09/08 12:22:19 by notraore         ###   ########.fr       */
+/*   Created: 2017/09/09 17:18:52 by nghaddar          #+#    #+#             */
+/*   Updated: 2017/09/09 21:54:28 by nghaddar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../toolbox.h"
+#include "../wolf3d.h"
 
-void		ft_player_init(t_ply *start)
+int worldMap[24][24]=
 {
-	start->dir_x = 22;
-	start->dir_y = 12;
-	start->dir_x = -1;
-	start->dir_y = 0;
-	start->fov_x = 0;
-	start->fov_y = 0.66;
-	start->time = 0;
-	start->old_time = 0;
-}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
 
-void	curr_init(t_curr *curr, t_ray *ray)
+void	ft_line(t_env *env, t_coords a, t_coords b, int clr)
 {
-	curr->map_x = (int)ray->pray_x;
-	curr->map_y = (int)ray->pray_y;
-	curr->del_distx = sqrt(1 + (ray->dray_x * ray->dray_x) / (ray->dray_x * ray->dray_x));
-	curr->del_disty = sqrt(1 + (ray->dray_y * ray->dray_y) / (ray->dray_y * ray->dray_y));
-	curr->hit = 0;
-}
+	t_draw line;
 
-void	side_step_init(t_ray *ray, t_curr *curr)
-{
-	if (ray->dray_x < 0)
+	line.dx = abs(b.x - a.x);
+	line.sx = a.x < b.x ? 1 : -1;
+	line.dy = abs(b.y - a.y);
+	line.sy = a.y < b.y ? 1 : -1;
+	line.err = (line.dx > line.dy ? line.dx : -(line.dy)) / 2;
+	while (1)
 	{
-		curr->stepx = -1;
-		curr->sid_distx = (ray->pray_x - curr->map_x) * curr->del_distx;
-	}
-	else
-	{
-		curr->stepx = 1;
-		curr->sid_distx = (curr->map_x + 1.0 - ray->pray_x) * curr->del_distx;
-	}
-	if (ray->dray_y < 0)
-	{
-		curr->stepy = -1;
-		curr->sid_disty = (ray->pray_x - curr->map_y) * curr->del_disty;
-	}
-	else
-	{
-		curr->stepy = 1;
-		curr->sid_disty = (curr->map_y + 1.0 - ray->pray_y) * curr->del_disty;
-	}
-}
-
-void		wall_hit(t_curr *curr, int map[MAPW][MAPH])
-{
-	while (curr->hit == 0)
-	{
-		if (curr->sid_distx < curr->sid_disty)
+		if ((a.x >= 0 && a.x <= WIN_WIDTH) && (a.y >= 0 && a.y <= WIN_HEIGHT))
+			env->img_datas[a.x + a.y * WIN_WIDTH] = clr;
+		if (a.x == b.x && a.y == b.y)
+			break ;
+		line.e2 = line.err;
+		if (line.e2 > -(line.dx))
 		{
-			curr->sid_distx += curr->del_distx;
-			curr->map_x += curr->stepx;
-			curr->side = 0;
+			line.err -= line.dy;
+			a.x += line.sx;
+		}
+		if (line.e2 < line.dy)
+		{
+			line.err += line.dx;
+			a.y += line.sy;
+		}
+	}
+}
+
+void	ft_line_b(t_env *env, t_coords a, t_coords b, int clr)
+{
+	t_draw line;
+
+	line.dx = abs(b.x - a.x);
+	line.sx = a.x < b.x ? 1 : -1;
+	line.dy = abs(b.y - a.y);
+	line.sy = a.y < b.y ? 1 : -1;
+	line.err = (line.dx > line.dy ? line.dx : -(line.dy)) / 2;
+	while (1)
+	{
+		if ((a.x >= 0 && a.x <= WIN_WIDTH) && (a.y >= 0 && a.y <= WIN_HEIGHT))
+			env->img_datas[a.x + a.y * WIN_WIDTH] = clr;
+		if (a.x == b.x && a.y == b.y)
+			break ;
+		line.e2 = line.err;
+		if (line.e2 > -(line.dx))
+		{
+			line.err -= line.dy;
+			a.x += line.sx;
+		}
+		if (line.e2 < line.dy)
+		{
+			line.err += line.dx;
+			a.y += line.sy;
+		}
+	}
+}
+
+int			ft_hooks(int keycode, t_all *all)
+{
+	if (keycode == 53)
+		exit(EXIT_SUCCESS);
+	if (keycode == 13)
+	{
+		if (worldMap[(int)(all->p->posX + all->p->dirX * all->p->moveSpeed)][(int)(all->p->posY)] == false)
+			all->p->posX += all->p->dirX * all->p->moveSpeed;
+		if (worldMap[(int)(all->p->posX)][(int)(all->p->posY + all->p->dirY * all->p->moveSpeed)] == false)
+			all->p->posY += all->p->dirY * all->p->moveSpeed;
+	}
+	if (keycode == 1)
+	{
+		if (worldMap[(int)(all->p->posX - all->p->dirX * all->p->moveSpeed)][(int)(all->p->posY)] == false)
+			all->p->posX -= all->p->dirX * all->p->moveSpeed;
+		if (worldMap[(int)(all->p->posX)][(int)(all->p->posY - all->p->dirY * all->p->moveSpeed)] == false)
+			all->p->posY -= all->p->dirY * all->p->moveSpeed;
+	}
+	printf("hoks.x = %f\n", all->p->posX);
+	printf("hoks.y = %f\n", all->p->posY);
+	if (keycode == 0)
+	{
+		double oldDirX = all->p->dirX;
+		all->p->dirX = all->p->dirX * cos(-all->p->rotSpeed) - all->p->dirY * sin(-all->p->rotSpeed);
+		all->p->dirY = oldDirX * sin(-all->p->rotSpeed) + all->p->dirY * cos(-all->p->rotSpeed);
+		double oldPlaneX = all->p->planeX;
+		all->p->planeX = all->p->planeX * cos(-all->p->rotSpeed) - all->p->planeY * sin(-all->p->rotSpeed);
+		all->p->planeY = oldPlaneX * sin(-all->p->rotSpeed) + all->p->planeY * cos(-all->p->rotSpeed);
+	}
+	if (keycode == 2)
+	{
+		double oldDirX = all->p->dirX;
+		all->p->dirX = all->p->dirX * cos(all->p->rotSpeed) - all->p->dirY * sin(all->p->rotSpeed);
+		all->p->dirY = oldDirX * sin(all->p->rotSpeed) + all->p->dirY * cos(all->p->rotSpeed);
+		double oldPlaneX = all->p->planeX;
+		all->p->planeX = all->p->planeX * cos(all->p->rotSpeed) - all->p->planeY * sin(all->p->rotSpeed);
+		all->p->planeY = oldPlaneX * sin(all->p->rotSpeed) + all->p->planeY * cos(all->p->rotSpeed);
+	}
+	printf("plane.x = %f\n", all->p->dirX);
+	printf("plane.y = %f\n", all->p->dirY);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
+	printf("keycode = %d\n", keycode);
+	return (0);
+}
+
+
+int		main(void)
+{
+	t_ply	player;
+	t_env	env;
+	t_map	map;
+	t_coords a;
+	t_coords b;
+	t_all all;
+
+	player.moveSpeed = 5;
+	printf("player. = %f\n", player.moveSpeed);
+	all.e = &env;
+	all.p = &player;
+	all.m = &map;
+	printf("all. = %f\n", all.p->moveSpeed);
+	env.mlx = mlx_init();
+	env.win = mlx_new_window(env.mlx, WIN_WIDTH, WIN_HEIGHT, "test");
+	env.img = mlx_new_image(env.mlx, WIN_WIDTH, WIN_HEIGHT);
+	env.img_datas = (int *)mlx_get_data_addr(env.img, &(env.bpp), &(env.sl), &(env.end));
+
+	player.posX = 12;
+	player.posY = 22;
+	player.dirX = -1;
+	player.dirY = 0;
+	player.planeX = 0;
+	player.planeY = 0.66;
+	env.clr = WHITE;
+	for (int x = 0; x < WIN_WIDTH; x++)
+	{
+		player.camX = 2 * x / (double)WIN_WIDTH - 1;
+		player.rayPosX = player.posX; 
+		player.rayPosY = player.posY;
+		player.rayDirX = player.dirX + player.planeX * player.camX;
+		player.rayDirY = player.dirY + player.planeY * player.camX;
+		map.mapX = (int)player.rayPosX;
+		map.mapY = (int)player.rayPosY;
+
+		map.deltaDistX = sqrt(1 + (player.rayDirY * player.rayDirY) / (player.rayDirX * player.rayDirX));
+		map.deltaDistY = sqrt(1 + (player.rayDirX * player.rayDirX) / (player.rayDirY * player.rayDirY));
+		map.hit = 0;
+		if (player.rayDirX < 0)
+		{
+			map.stepX = -1;
+			map.sideDistX = (player.rayPosX - map.mapX) * map.deltaDistX;
 		}
 		else
 		{
-			curr->sid_disty += curr->del_disty;
-			curr->map_y += curr->stepy;
-			curr->side = 1;
+			map.stepX = 1;
+			map.sideDistX = (map.mapX + 1.0 - player.rayPosX) * map.deltaDistX;
 		}
-		if (map[curr->map_x][curr->map_y] > 0)
-			curr->hit = 1;
+		if (player.rayDirY < 0)
+		{
+			map.stepY = -1;
+			map.sideDistY = (player.rayPosY - map.mapY) * map.deltaDistY;
+		}
+		else
+		{
+			map.stepY = 1;
+			map.sideDistY = (map.mapY + 1.0 - player.rayPosY) * map.deltaDistY;
+		}
+		while (map.hit == 0)
+		{
+			if (map.sideDistX < map.sideDistY)
+			{
+				map.sideDistX += map.deltaDistX;
+				map.mapX += map.stepX;
+				map.side = 0;
+			}
+			else
+			{
+				map.sideDistY += map.deltaDistY;
+				map.mapY += map.stepY;
+				map.side = 1;
+			}
+			if (worldMap[map.mapX][map.mapY] > 0)
+				map.hit = 1;
+		}
+		if (map.side == 0)
+			map.perpWallDist = (map.mapX - player.rayPosX + (1 - map.stepX) / 2) / player.rayDirX;
+		else
+			map.perpWallDist = (map.mapY - player.rayPosY + (1 - map.stepY) / 2) / player.rayDirY;
+		map.lineHeight = (int)(WIN_HEIGHT / map.perpWallDist);
+		map.drawStart = -map.lineHeight / 2 + WIN_HEIGHT / 2;
+		if (map.drawStart < 0)
+			map.drawStart = 0;
+		map.drawEnd = map.lineHeight / 2 + WIN_HEIGHT / 2;
+		if (map.drawEnd >= WIN_HEIGHT)
+			map.drawEnd = WIN_HEIGHT - 1;
+		if (worldMap[map.mapX][map.mapY] == 1)
+			map.clr = BLUE;
+		a.x = x;
+		a.y = map.drawStart;
+		b.x = x;
+		b.y = map.drawEnd;
+		if (map.side == 1)
+			ft_line(&env, a, b, env.clr);
+		else
+			ft_line_b(&env, a, b, env.clr / 2);
+		mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	}
-}
-
-void		draw_pixel(t_draw *draw, t_mlx *ptr)
-{
-	int i;
-
-	i = -1;
-	while (++i < draw->draw_end)
-		ptr->data[i + draw->draw_end] = ptr->color;
-}
-int main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	t_curr		curr;
-	t_ply		ply;
-	t_mlx		ptr;
-	t_ray		ray;
-	t_draw		draw;
-	t_env		e;
-
-	e.mlx = &ptr;
-	e.curr = &curr;
-	e.ray = &ray;
-	e.ply = &ply;
-
-	int i;
-
-	int map[MAPW][MAPH]=
-	{
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
-		{1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-	};
-	i = 0;
-	// int j = 0;
-	if (!(e.map = malloc(sizeof(int) * 24)))
-		return (0);
-	ft_player_init(&ply);
-	ptr.mlx = mlx_init();
-	ptr.win = mlx_new_window(ptr.mlx, W, H, "WOLF3D");
-	ptr.img = mlx_new_image(ptr.mlx, W, H);
-	ptr.data = (int *)mlx_get_data_addr(ptr.img,
-	&ptr.bpp, &ptr.sl, &ptr.end);
-	while (i < W)
-	{
-		ray.cam_x = 2 * i / (double)W - 1;
-		ray.pray_x = ply.pos_x;
-		ray.pray_y = ply.pos_y;
-		ray.dray_x = ply.dir_x + ply.fov_x * ray.cam_x;
-		ray.dray_y = ply.dir_y + ply.fov_y * ray.cam_x;
-		i++;
-		printf("here %d\n", i);
-	}
-	curr_init(&curr, &ray);
-	side_step_init(&ray, &curr);
-	wall_hit(&curr, map);
-	if (curr.side == 0)
-		curr.wall_dist = (curr.map_x - ray.pray_x + (1 - curr.stepx) / 2) / ray.dray_x;
-	else
-		curr.wall_dist = (curr.map_y - ray.pray_x + (1 - curr.stepy) / 2) / ray.dray_y;
-	draw.line_height = (int)(H / curr.wall_dist);
-	draw.draw_start = -draw.line_height / 2 + H / 2;
-	if(draw.draw_start < 0)
-		draw.draw_start = 0;
-		draw.draw_end = draw.line_height / 2 + H / 2;
-	if(draw.draw_end >= H)
-		draw.draw_end = H - 1;
-	if (map[curr.map_x][curr.map_y] == 1)
-		ptr.color = RED;
-	if (curr.side == 1)
-		ptr.color = ptr.color / 2;
-	int d = draw.draw_start;
-	printf("start = %d\n", d);
-	printf("end = %d\n", draw.draw_end);
-	while (++d < draw.draw_end)
-		ptr.data[d + draw.draw_end * W] = RED;
-	mlx_put_image_to_window(ptr.mlx, ptr.win, ptr.img, 0, 0);
-	mlx_hook(ptr.win, 2, (1L << 0), &keyboard_actions, 0);
-	mlx_loop(ptr.mlx);
-	return (0);
+	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
+	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
+	// mlx_hook(env.win, 6, (6L>>0), ft_mouse_hooks, env);
+	mlx_loop(env.mlx);
+	return (EXIT_SUCCESS);
 }

@@ -10,52 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../toolbox.h"
+#include "../wolf3d.h"
 
-int			keyboard_actions(int keycode)//, t_env *e)
-{
-	if (keycode == 53)
-		exit(EXIT_SUCCESS);
-	// if (keycode == 13)
-	// {
-	// 	if(!map[(int)(e->ply->pos_x + e->ply->dir_x * e->ply->m_spd)]
-	// 	[(int)(e->ply->pos_y)])
-	// 		e->ply->pos_x += e->ply->dir_x * e->ply->m_spd;
-	// 	if(!map[(int)(e->ply->pos_x)]
-	// 	[(int)(e->ply->pos_y + e->ply->dir_y * e->ply->m_spd)])
-	// 		e->ply->pos_y += e->ply->dir_y * e->ply->m_spd;
-	// }
-	// //move backwards if no wall behind you
-	// if (keycode == 1)
-	// {
-	// 	if(!map[(int)(e->ply->pos_x - e->ply->dir_x * e->ply->m_spd)]
-	// 	[(int)(e->ply->pos_y)])
-	// 		e->ply->pos_x -= e->ply->dir_x * e->ply->m_spd;
-	// 	if(!map[(int)(e->ply->pos_x)]
-	// 	[(int)(e->ply->pos_y - e->ply->dir_y * e->ply->m_spd)])
-	// 		e->ply->pos_y -= e->ply->dir_y * e->ply->m_spd;
-	// }
-	// //rotate to the right
-	// if (keycode == 2)
-	// {
-	// 	//both camera direction and camera plane must be rotated
-	// 	double old_dirx = e->ply->dir_x;
-	// 	e->ply->dir_x = e->ply->dir_x * cos(-e->ply->r_spd) - e->ply->dir_y * sin(-e->ply->r_spd);
-	// 	e->ply->dir_y = old_dirx * sin(-e->ply->r_spd) + e->ply->dir_y * cos(-e->ply->r_spd);
-	// 	double old_fovx = e->ply->fov_x;
-	// 	e->ply->fov_x = e->ply->fov_x * cos(-e->ply->r_spd) - e->ply->fov_y * sin(-e->ply->r_spd);
-	// 	e->ply->fov_y = old_fovx * sin(-e->ply->r_spd) + e->ply->fov_y * cos(-e->ply->r_spd);
-	// }
-	// //rotate to the left
-	// if (keycode == 0)
-	// {
-	// 	double old_dirx = e->ply->dir_x;
-	// 	e->ply->dir_x = e->ply->dir_x * cos(e->ply->r_spd) - e->ply->dir_y * sin(e->ply->r_spd);
-	// 	e->ply->dir_y = old_dirx * sin(e->ply->r_spd) + e->ply->dir_y * cos(e->ply->r_spd);
-	// 	double old_fovx = e->ply->fov_x;
-	// 	e->ply->fov_x = e->ply->fov_x * cos(e->ply->r_spd) - e->ply->fov_y * sin(e->ply->r_spd);
-	// 	e->ply->fov_y = old_fovx * sin(e->ply->r_spd) + e->ply->fov_y * cos(e->ply->r_spd);
-	// }
-	printf("keycode = %d\n", keycode);
-	return (0);
-}
+// int			ft_hooks(int keycode, t_all *all)
+// {
+// 	// (void)all;
+// 	if (keycode == 53)
+// 		exit(EXIT_SUCCESS);
+// 	if (keycode == 13)
+//     {
+//       if (!worldMap[(int)(all->p->posX + all->p->dirX * all->p->moveSpeed)][(int)(all->p->posY)])
+//       	all->p->posX += all->p->dirX * all->p->moveSpeed;
+//       if (!worldMap[(int)(all->p->posX)][(int)(all->p->posY + all->p->dirY * all->p->moveSpeed)])
+//       	all->p->posY += all->p->dirY * all->p->moveSpeed;
+//     }
+// 	printf("keycode = %d\n", keycode);
+// 	return (0);
+// }

@@ -16,7 +16,7 @@ SRC=srcs/main.c srcs/keyboard.c
 OBJ=main.o keyboard.o
 FLAGS=-Wall -Wextra -Werror
 LIB=-L ./libft -lft
-MLX=-L ./miniLibx -lmlx -framework OpenGL -framework AppKit
+MLX=-L ./miniLibx -l mlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
