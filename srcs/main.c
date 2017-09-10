@@ -54,6 +54,7 @@ int	get_color(t_all *all)
 	if ((all->m->stepX == -1 && all->m->stepY == -1 ||
 	    all->m->stepX == -1 && all->m->stepY == 1))
 		return (GREEN);
+	return (0);
 }
 
 void	ft_line(t_all *all, int x, int start, int end)
@@ -64,7 +65,7 @@ void	ft_line(t_all *all, int x, int start, int end)
 
 	if ((start >= 0 && start <= WIN_WIDTH) && (end >= 0 && end <= WIN_HEIGHT))
 		while (++i < end)
-			all->e->img_datas[x + i * WIN_WIDTH] = WHITE / 2;
+			all->e->img_datas[x + i * WIN_WIDTH] = get_color(all);
 }
 
 int			ft_hooks(int keycode, t_all *all)
