@@ -79,6 +79,8 @@ int			ft_hooks(int keycode, t_all *all)
 			all->p->posX += all->p->dirX * all->p->moveSpeed;
 		if (worldMap[(int)(all->p->posX)][(int)(all->p->posY + all->p->dirY * all->p->moveSpeed)] == false)
 			all->p->posY += all->p->dirY * all->p->moveSpeed;
+		printf("hoks.posx = %f\n", all->p->posX);
+		printf("hoks.posy = %f\n", all->p->posY);
 	}
 	if (keycode == 1)
 	{
@@ -86,9 +88,9 @@ int			ft_hooks(int keycode, t_all *all)
 			all->p->posX -= all->p->dirX * all->p->moveSpeed;
 		if (worldMap[(int)(all->p->posX)][(int)(all->p->posY - all->p->dirY * all->p->moveSpeed)] == false)
 			all->p->posY -= all->p->dirY * all->p->moveSpeed;
+		printf("hoks.posx = %f\n", all->p->posX);
+		printf("hoks.posy = %f\n", all->p->posY);
 	}
-	printf("hoks.x = %f\n", all->p->posX);
-	printf("hoks.y = %f\n", all->p->posY);
 	if (keycode == 0)
 	{
 		double oldDirX = all->p->dirX;
@@ -97,6 +99,8 @@ int			ft_hooks(int keycode, t_all *all)
 		double oldPlaneX = all->p->planeX;
 		all->p->planeX = all->p->planeX * cos(-all->p->rotSpeed) - all->p->planeY * sin(-all->p->rotSpeed);
 		all->p->planeY = oldPlaneX * sin(-all->p->rotSpeed) + all->p->planeY * cos(-all->p->rotSpeed);
+		printf("dir.x = %f\n", all->p->dirX);
+		printf("dir.y = %f\n", all->p->dirY);
 	}
 	if (keycode == 2)
 	{
@@ -106,14 +110,14 @@ int			ft_hooks(int keycode, t_all *all)
 		double oldPlaneX = all->p->planeX;
 		all->p->planeX = all->p->planeX * cos(all->p->rotSpeed) - all->p->planeY * sin(all->p->rotSpeed);
 		all->p->planeY = oldPlaneX * sin(all->p->rotSpeed) + all->p->planeY * cos(all->p->rotSpeed);
+		printf("dir.x = %f\n", all->p->dirX);
+		printf("dir.y = %f\n", all->p->dirY);
 	}
 	if (keycode == 49)
 	{
 		all->e->clr = BLUE;
 		mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
 	}
-	printf("dir.x = %f\n", all->p->dirY);
-	printf("dir.y = %f\n", all->p->dirY);
 	printf("rot. = %f\n", all->p->rotSpeed);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
 	printf("keycode = %d\n", keycode);
@@ -132,8 +136,6 @@ int		main(void)
 
 	player.moveSpeed = 5;
 	player.rotSpeed = 5;
-	printf("player. = %f\n", player.moveSpeed);
-	printf("rot. = %f\n", player.rotSpeed);
 	all.e = &env;
 	all.p = &player;
 	all.m = &map;
@@ -150,9 +152,12 @@ int		main(void)
 	player.planeX = 0;
 	player.planeY = 0.66;
 	env.clr = WHITE;
+	printf("player.mainposx = %f\n", player.posX);
+	printf("player.mainposy = %f\n", player.posY);
+	printf("player.maindirx = %f\n", player.dirX);
+	printf("player.maindiry = %f\n", player.dirY);
 	for (int x = 0; x < WIN_WIDTH; x++)
 	{
-		printf("edefe\n");
 		player.camX = 2 * x / (double)WIN_WIDTH - 1;
 		player.rayPosX = player.posX; 
 		player.rayPosY = player.posY;
