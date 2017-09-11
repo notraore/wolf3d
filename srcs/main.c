@@ -6,56 +6,100 @@
 /*   By: nghaddar <nghaddar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 17:18:52 by nghaddar          #+#    #+#             */
-/*   Updated: 2017/09/09 21:54:28 by nghaddar         ###   ########.fr       */
+/*   Updated: 2017/09/11 19:10:25 by notraore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../wolf3d.h"
 
-int worldMap[24][24]=
+void			ft_help(void)
 {
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+	ft_putendl("usage : ./wolf3d [.map]\n");
+	exit(EXIT_FAILURE);
+}
 
-int		main(void)
+void			ft_print_err(int argc)
 {
-	t_ply	player;
-	t_env	env;
-	t_map	map;
-	t_all	all;
+	if (argc > 2)
+		write(2, "\n\t\t\t*****Too many arguments.*****\n", 34);
+	if (argc < 2)
+		ft_putendl("Please. Enter a map name to display.");
+	ft_help();
+}
 
+int				open_close_fd(t_all *all)
+{
+	int i;
+
+	i = 0;
+	all->line = NULL;
+	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
+	while ((all->value = get_next_line(all->fd, &all->line)) == 1)
+	{
+		if (all->line)
+		{
+			free(all->line);
+			all->line = NULL;
+		}
+		i++;
+	}
+	if (all->line)
+	{
+		free(all->line);
+		all->line = NULL;
+	}
+	close(all->fd);
+	return (i);
+}
+
+void			ft_parce_file(t_all *all)
+{
+	all->i = open_close_fd(all);
+	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
+	all->map = (int **)ft_memalloc(sizeof(int *) * all->i + 1);
+	all->taille = (int *)ft_memalloc(sizeof(int) * all->i + 1);
+	all->i = 0;
+	while ((all->value = get_next_line(all->fd, &all->line)) == 1)
+	{
+		all->tmp = ft_strsplit(all->line, ' ');
+		while (all->tmp[all->i++])
+			all->i += 1;
+		all->map[all->j] = ft_memalloc(sizeof(int) * all->i + 1);
+		all->i = -1;
+		while (all->tmp[all->i += 1])
+		{
+			all->map[all->j][all->i] = ft_atoi(all->tmp[all->i]);
+			printf("%d", all->map[all->j][all->i]);
+		}
+		all->taille[all->j] = all->i;
+		free_tab(all->tmp);
+		free(all->line);
+		all->j += 1;
+		printf("\n");
+	}
+	all->map[all->j] = NULL;
+}
+
+int				main(int argc, char **argv)
+{
+	t_ply		player;
+	t_env		env;
+	t_map		map;
+	t_all		all;
+
+	if (argc != 2)
+		ft_print_err(argc);
+	all.argv = argv[1];
 	all.p = &player;
+	ft_parce_file(&all);
 	init_player(&all);
 	env.mlx = mlx_init();
-	env.win = mlx_new_window(env.mlx, WIN_WIDTH, WIN_HEIGHT, "test");
-	env.img = mlx_new_image(env.mlx, WIN_WIDTH, WIN_HEIGHT);
-	env.img_datas = (int *)mlx_get_data_addr(env.img, &(env.bpp), &(env.sl), &(env.end));
+	env.win = mlx_new_window(env.mlx, W, H, "test");
+	env.img = mlx_new_image(env.mlx, W, H);
+	env.img_datas = (int *)mlx_get_data_addr(env.img,
+			&(env.bpp), &(env.sl), &(env.end));
 	all.e = &env;
 	all.m = &map;
-
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
 	mlx_loop(env.mlx);
