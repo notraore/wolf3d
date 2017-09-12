@@ -13,8 +13,8 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# define W 2560
-# define H 1440
+# define W 1280
+# define H 720
 
 # define K_ESC 53
 # define RED 0xFF0000
@@ -43,6 +43,7 @@ typedef struct s_coords		t_coords;
 
 struct						s_ply
 {
+	double					fps;
 	double					camx;
 	double					posx;
 	double					posy;
@@ -57,6 +58,7 @@ struct						s_ply
 	double					raydiry;
 	double					rotspeed;
 	double					movespeed;
+	double					deltatime;
 	clock_t					last_frame;
 	clock_t					next_frame;
 };
@@ -109,13 +111,15 @@ struct						s_all
 {
 	int						i;
 	int						j;
+	int						h_copy;
 	int						fd;
-	char					*argv;
 	int						**map;
-	int						*taille;
 	int						value;
+	int						*taille;
+	char					*argv;
 	char					*line;
 	char					**tmp;
+	void					*xpm;
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
@@ -123,6 +127,13 @@ struct						s_all
 	t_coords				*cora;
 	t_coords				*corb;
 };
+
+/*
+**main.c
+*/
+int							open_close_fd(t_all *all);
+void						ft_parce_file(t_all *all);
+void						check_file(t_all *all);
 
 /*
 **movement_input.c
@@ -142,6 +153,13 @@ void						raycast(t_all *all);
 int							ft_loop(t_all *all);
 
 /*
+**error.c
+*/
+void						ft_help(void);
+void						ft_print_err(int argc);
+
+
+/*
 **inits.c
 */
 void						all_init(t_all *all, int x);
@@ -153,8 +171,14 @@ void						init_player(t_all *all);
 void						ft_line(t_all *all, int x, int start, int end);
 int							get_color(t_all *all);
 
+/*
+**keyboard.c
+*/
 int							ft_hooks(int keycode, t_all *all);
-int							ft_game(t_all *all);
-void						ft_line(t_all *all, int x, int start, int end);
+
+/*
+**draw_formes
+*/
+void						draw_circle(int x0, int y0, int radius, t_all *all);
 
 #endif

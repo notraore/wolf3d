@@ -30,14 +30,14 @@ void		all_init(t_all *all, int x)
 
 void		init_player(t_all *all)
 {
-	all->p->posx = 12;
-	all->p->posy = 5;
+	all->p->posx = all->j / 2;
+	all->p->posy = *all->taille / 2;
 	all->p->dirx = -1;
 	all->p->diry = 0;
 	all->p->planex = 0;
 	all->p->planey = 0.66;
 	all->p->last_frame = clock();
 	all->p->next_frame = 0;
-	all->p->movespeed = 1;
+	all->p->movespeed = 0.05;
 	all->p->rotspeed = 0.05;
 }

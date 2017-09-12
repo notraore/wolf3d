@@ -12,21 +12,6 @@
 
 #include "../wolf3d.h"
 
-void			ft_help(void)
-{
-	ft_putendl("usage : ./wolf3d [.map]\n");
-	exit(EXIT_FAILURE);
-}
-
-void			ft_print_err(int argc)
-{
-	if (argc > 2)
-		write(2, "\n\t\t\t*****Too many arguments.*****\n", 34);
-	if (argc < 2)
-		ft_putendl("Please. Enter a map name to display.");
-	ft_help();
-}
-
 int				open_close_fd(t_all *all)
 {
 	int i;
@@ -67,17 +52,40 @@ void			ft_parce_file(t_all *all)
 		all->map[all->j] = ft_memalloc(sizeof(int) * all->i + 1);
 		all->i = -1;
 		while (all->tmp[all->i += 1])
-		{
 			all->map[all->j][all->i] = ft_atoi(all->tmp[all->i]);
-			printf("%d", all->map[all->j][all->i]);
-		}
 		all->taille[all->j] = all->i;
 		free_tab(all->tmp);
 		free(all->line);
 		all->j += 1;
-		printf("\n");
 	}
 	all->map[all->j] = NULL;
+}
+
+void			check_file(t_all *all)
+{
+	int i;
+	int j;
+	int last;
+
+	i = 0;
+	j = 0;
+	last = all->i - 1;
+	while (j < all->j)
+	{
+		i = 0;
+		while (i < all->i)
+		{
+			if (j == 0 || j == all->j)
+			{
+				if (all->map[j][i] == 0)
+					ft_kill("Map not well closed. Please check map borders.");
+			}
+			if (all->map[j][0] == 0 || all->map[j][last] == 0)
+				ft_kill("Map not well closed. Please check map borders.");
+			i++;
+		}
+		j++;
+	}
 }
 
 int				main(int argc, char **argv)
@@ -89,16 +97,18 @@ int				main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_print_err(argc);
+	all.e = &env;
 	all.argv = argv[1];
 	all.p = &player;
 	ft_parce_file(&all);
+	check_file(&all);
 	init_player(&all);
 	env.mlx = mlx_init();
+	all.e->img = mlx_xpm_file_to_image(all.e->mlx,
+	"./Textures/Munt.xpm", &(all.e->sl), &env.bpp);
 	env.win = mlx_new_window(env.mlx, W, H, "test");
-	env.img = mlx_new_image(env.mlx, W, H);
 	env.img_datas = (int *)mlx_get_data_addr(env.img,
-			&(env.bpp), &(env.sl), &(env.end));
-	all.e = &env;
+	&(env.bpp), &(env.sl), &(env.end));
 	all.m = &map;
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);

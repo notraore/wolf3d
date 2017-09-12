@@ -18,14 +18,16 @@ int			get_color(t_all *all)
 	{
 		if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 			(all->m->stepx == 1 && all->m->stepy == -1))
-			return (RED);
+			return (BLUE / 4);
 		if ((all->m->stepx == -1 && all->m->stepy == 1) ||
 			(all->m->stepx == 1 && all->m->stepy == 1))
-			return (BLUE);
+			return (BLUE / 2);
 	}
 	if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 		(all->m->stepx == -1 && all->m->stepy == 1))
-		return (YELLOW);
+		return (BLUE);
+	else
+		return (GREY);
 	return (0);
 }
 
@@ -33,14 +35,14 @@ void		ft_line(t_all *all, int x, int start, int end)
 {
 	int i;
 
-	i = -1;
-	while (++i < start)
-		all->e->img_datas[x + i * W] = GAY;
-	i--;
+	i = start - 1;
 	if ((start >= 0 && start <= W) && (end >= 0 && end <= H))
+	{
 		while (++i < end)
 			all->e->img_datas[x + i * W] = get_color(all);
-	i--;
-	while (++i < H)
-		all->e->img_datas[x + i * W] = MARRON;
+		i = end - 1;
+		while (++i < H)
+			all->e->img_datas[x + i * W] = MARRON;
+		draw_circle(W / 2, H / 2, 5, all);
+	}
 }
