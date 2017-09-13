@@ -22,14 +22,14 @@ void	draw_circle(int x0, int y0, int radius, t_all *all)
 
 	while (x >= y)
 	{
-		all->e->img_datas[(x0 + x) + (y0 + y) * W] = RED;
-		all->e->img_datas[(x0 + y) + (y0 + x) * W] = RED;
-		all->e->img_datas[(x0 - y) + (y0 + x) * W] = RED;
-		all->e->img_datas[(x0 - x) + (y0 + y) * W] = RED;
-		all->e->img_datas[(x0 - x) + (y0 - y) * W] = RED;
-		all->e->img_datas[(x0 - y) + (y0 - x) * W] = RED;
-		all->e->img_datas[(x0 + y) + (y0 - x) * W] = RED;
-		all->e->img_datas[(x0 + x) + (y0 - y) * W] = RED;
+		all->e->img_datas[(x0 + x) + (y0 + y) * W] = all->clr;
+		all->e->img_datas[(x0 + y) + (y0 + x) * W] = all->clr;
+		all->e->img_datas[(x0 - y) + (y0 + x) * W] = all->clr;
+		all->e->img_datas[(x0 - x) + (y0 + y) * W] = all->clr;
+		all->e->img_datas[(x0 - x) + (y0 - y) * W] = all->clr;
+		all->e->img_datas[(x0 - y) + (y0 - x) * W] = all->clr;
+		all->e->img_datas[(x0 + y) + (y0 - x) * W] = all->clr;
+		all->e->img_datas[(x0 + x) + (y0 - y) * W] = all->clr;
 		if (err <= 0)
 		{
 			y++;

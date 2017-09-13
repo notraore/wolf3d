@@ -39,7 +39,8 @@ int				open_close_fd(t_all *all)
 
 void			ft_parce_file(t_all *all)
 {
-	all->i = open_close_fd(all);
+	if (!(all->i = open_close_fd(all)))
+		exit(EXIT_FAILURE);
 	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
 	all->map = (int **)ft_memalloc(sizeof(int *) * all->i + 1);
 	all->taille = (int *)ft_memalloc(sizeof(int) * all->i + 1);
@@ -105,11 +106,12 @@ int				main(int argc, char **argv)
 	init_player(&all);
 	env.mlx = mlx_init();
 	all.e->img = mlx_xpm_file_to_image(all.e->mlx,
-	"./Textures/Munt.xpm", &(all.e->sl), &env.bpp);
+	"./Textures/Sky.xpm", &(all.e->sl), &env.bpp);
 	env.win = mlx_new_window(env.mlx, W, H, "test");
 	env.img_datas = (int *)mlx_get_data_addr(env.img,
 	&(env.bpp), &(env.sl), &(env.end));
 	all.m = &map;
+	ft_putnbr(ft_atoi("degs5451grdg744"));	
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
 	mlx_loop(env.mlx);

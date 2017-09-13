@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
@@ -17,15 +17,12 @@
 # define H 720
 
 # define K_ESC 53
-# define RED 0xFF0000
-# define GREEN 0x00FF00
 # define BLUE 0x0000FF
+# define FBLUE 0x00BFFF
+# define FGREY 0x424242
+# define RED 0xFF0000
 # define WHITE 0xFFFFFF
-# define BLACK 0x000000
-# define GREY 0x745F5F
-# define GAY 0xF781F3
-# define MARRON 0x61380B
-# define YELLOW 0xF7FE2E
+
 
 # include "./libft/libft.h"
 # include "./minilibx/mlx.h"
@@ -111,8 +108,9 @@ struct						s_all
 {
 	int						i;
 	int						j;
-	int						h_copy;
 	int						fd;
+	int						clr;
+	int						h_copy;
 	int						**map;
 	int						value;
 	int						*taille;

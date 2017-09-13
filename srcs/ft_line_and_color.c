@@ -18,17 +18,25 @@ int			get_color(t_all *all)
 	{
 		if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 			(all->m->stepx == 1 && all->m->stepy == -1))
-			return (BLUE / 4);
+			return (FBLUE);
 		if ((all->m->stepx == -1 && all->m->stepy == 1) ||
 			(all->m->stepx == 1 && all->m->stepy == 1))
-			return (BLUE / 2);
+			return (BLUE);
 	}
 	if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 		(all->m->stepx == -1 && all->m->stepy == 1))
-		return (BLUE);
+		return (BLUE / 2);
 	else
-		return (GREY);
+		return (FBLUE / 2);
 	return (0);
+}
+
+void		ft_map_reticule_hud(t_all *all)
+{
+		all->clr = RED;
+		draw_circle(W / 2, H / 2, 5, all);
+		all->clr = WHITE;
+		draw_circle(W -150, 600, 100, all);
 }
 
 void		ft_line(t_all *all, int x, int start, int end)
@@ -42,7 +50,7 @@ void		ft_line(t_all *all, int x, int start, int end)
 			all->e->img_datas[x + i * W] = get_color(all);
 		i = end - 1;
 		while (++i < H)
-			all->e->img_datas[x + i * W] = MARRON;
-		draw_circle(W / 2, H / 2, 5, all);
+			all->e->img_datas[x + i * W] = FGREY;
+		ft_map_reticule_hud(all);
 	}
 }

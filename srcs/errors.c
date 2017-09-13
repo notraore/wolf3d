@@ -14,7 +14,7 @@
 
 void			ft_help(void)
 {
-	ft_putendl("usage : ./wolf3d [.map]\n");
+	ft_putendl("usage : ./wolf3d [.map]");
 	exit(EXIT_FAILURE);
 }
 
