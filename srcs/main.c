@@ -107,11 +107,10 @@ int				main(int argc, char **argv)
 	env.mlx = mlx_init();
 	all.e->img = mlx_xpm_file_to_image(all.e->mlx,
 	"./Textures/Sky.xpm", &(all.e->sl), &env.bpp);
-	env.win = mlx_new_window(env.mlx, W, H, "test");
+	env.win = mlx_new_window(env.mlx, W, H, "WOLF3D");
 	env.img_datas = (int *)mlx_get_data_addr(env.img,
 	&(env.bpp), &(env.sl), &(env.end));
 	all.m = &map;
-	ft_putnbr(ft_atoi("degs5451grdg744"));	
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
 	mlx_loop(env.mlx);

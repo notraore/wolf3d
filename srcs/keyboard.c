@@ -17,6 +17,7 @@ int			ft_hooks(int keycode, t_all *all)
 	if (keycode == 53)
 	{
 		mlx_destroy_image(all->e->mlx, all->e->img);
+		ft_bzero(&all, sizeof(t_all));
 		exit(EXIT_SUCCESS);
 	}
 	if (keycode == 13)
@@ -27,6 +28,8 @@ int			ft_hooks(int keycode, t_all *all)
 		rot_right(all);
 	if (keycode == 0)
 		rot_left(all);
+	if (keycode == 49)
+		all->reticule = 20;
 	mlx_destroy_image(all->e->mlx, all->e->img);
 	all->e->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/Sky.xpm",
 	&(all->e->sl), &all->e->bpp);

@@ -114,6 +114,8 @@ struct						s_all
 	int						**map;
 	int						value;
 	int						*taille;
+	double					radar;
+	double					reticule;
 	char					*argv;
 	char					*line;
 	char					**tmp;

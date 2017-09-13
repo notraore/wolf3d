@@ -40,4 +40,5 @@ void		init_player(t_all *all)
 	all->p->next_frame = 0;
 	all->p->movespeed = 0.05;
 	all->p->rotspeed = 0.05;
+	all->reticule = 5;
 }

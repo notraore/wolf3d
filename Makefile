@@ -25,6 +25,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ echo "\033[92m\t\t\t---> ✓ libft created. ✓ <---\033[0m"
 	@ make -C ./libft
+	@ make -C ./minilibx
 	@ echo "\033[92m\t---> ✓ wolf3d program has been successfully created. ✓ <---\033[0m"
 	@ $(CC) $(FLAGS) $(OBJ) -o $(NAME) $(MLX) $(LIB)
 $(OBJ): $(SRC)
@@ -33,10 +34,12 @@ clean:
 	@ echo "\033[1;33m---> All .o files cleared. ✓ <---\033[0m"
 	@ rm -f $(OBJ)
 	@ make -C ./libft clean
+	@ make -C ./minilibx clean
 fclean: clean
 	@ echo "\033[1;33m---> Everything has been cleared. ✓ <---\033[2;00m"
 	@ rm -f $(NAME)
 	@ make -C ./libft fclean
+	@ make -C ./minilibx fclean
 re: fclean all
 
 .PHONY: clean, fclean, re

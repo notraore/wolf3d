@@ -83,6 +83,13 @@ void		ray_draw(t_all *all, int x)
 	ft_line(all, x, drawstart, drawend);
 }
 
+void		hud_loop_update(t_all *all)
+{
+	all->radar += 0.001;
+	if (all->reticule > 5)
+		all->reticule -= 0.001;
+}
+
 void		raycast(t_all *all)
 {
 	int x;
@@ -96,6 +103,7 @@ void		raycast(t_all *all)
 		step_side_nbr(all);
 		ray_lenght(all);
 		ray_draw(all, x);
+		hud_loop_update(all);
 	}
 }
 
