@@ -49,4 +49,3 @@ fclean: clean
 	@rm -f $(OBJ) $(NAME)
 	@echo "Everything is cleared"
 re: fclean all
-	
