@@ -31,21 +31,6 @@ int			get_color(t_all *all)
 	return (0);
 }
 
-void		ft_map_reticule_hud(t_all *all)
-{
-	all->clr = RED;
-	draw_circle(W / 2, H / 2, all->reticule, all);
-	all->clr = WHITE;
-	draw_circle(W -150, 600, 100, all);
-	draw_circle(W -150, 600, 5, all);
-	all->clr = RED;
-	draw_circle(W -150, 600, all->radar, all);
-
-	if (all->radar >= 100)
-		all->radar = 5;
-
-}
-
 void		ft_line(t_all *all, int x, int start, int end)
 {
 	int i;

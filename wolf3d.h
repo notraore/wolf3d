@@ -1,4 +1,4 @@
-	/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
@@ -16,19 +16,21 @@
 # define W 1280
 # define H 720
 
-# define K_ESC 53
 # define BLUE 0x0000FF
 # define FBLUE 0x00BFFF
 # define FGREY 0x424242
 # define RED 0xFF0000
 # define WHITE 0xFFFFFF
-
+# define YELLOW 0xFFFF00
+# define GREEN 0x00FF00
+# define BLACK 0x00000
 
 # include "./libft/libft.h"
 # include "./minilibx/mlx.h"
 # include <math.h>
 # include <time.h>
 # include <stdbool.h>
+# include <pthread.h>
 
 typedef struct s_all		t_all;
 typedef struct s_ply		t_ply;
@@ -36,7 +38,6 @@ typedef struct s_map		t_map;
 typedef struct s_env		t_env;
 typedef struct s_draw		t_draw;
 typedef struct s_coords		t_coords;
-
 
 struct						s_ply
 {
@@ -120,6 +121,27 @@ struct						s_all
 	char					*line;
 	char					**tmp;
 	void					*xpm;
+
+	int						dx;
+	int						sx;
+	int						dy;
+	int						sy;
+	int						err;
+	int						e2;
+	int						x0;
+	int						y0;
+	int						x1;
+	int						y1;
+
+	int						cirx;
+	int						ciry;
+	int						cirdx;
+	int						cirdy;
+	int						cirerr;
+
+	int						start;
+	int						end;
+
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
@@ -132,8 +154,10 @@ struct						s_all
 **main.c
 */
 int							open_close_fd(t_all *all);
+void						ft_draw_minimap(t_all *all);
 void						ft_parce_file(t_all *all);
 void						check_file(t_all *all);
+void						ft_display_bousole(t_all *all);
 
 /*
 **movement_input.c
@@ -158,7 +182,6 @@ int							ft_loop(t_all *all);
 void						ft_help(void);
 void						ft_print_err(int argc);
 
-
 /*
 **inits.c
 */
@@ -175,10 +198,19 @@ int							get_color(t_all *all);
 **keyboard.c
 */
 int							ft_hooks(int keycode, t_all *all);
+void						proper_exit(t_all *all);
 
 /*
-**draw_formes
+**draw_formes.c
 */
+void						ft_bresenham(t_all *all);
 void						draw_circle(int x0, int y0, int radius, t_all *all);
+
+/*
+**hud.c
+*/
+void						ft_draw_minimap(t_all *all);
+void						ft_map_reticule_hud(t_all *all);
+void						hud_loop_update(t_all *all);
 
 #endif

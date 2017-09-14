@@ -12,14 +12,17 @@
 
 #include "../wolf3d.h"
 
+void		proper_exit(t_all *all)
+{
+	mlx_destroy_image(all->e->mlx, all->e->img);
+	ft_bzero(&all, sizeof(t_all));
+	exit(EXIT_SUCCESS);
+}
+
 int			ft_hooks(int keycode, t_all *all)
 {
 	if (keycode == 53)
-	{
-		mlx_destroy_image(all->e->mlx, all->e->img);
-		ft_bzero(&all, sizeof(t_all));
-		exit(EXIT_SUCCESS);
-	}
+		proper_exit(all);
 	if (keycode == 13)
 		forward_vector(all);
 	if (keycode == 1)

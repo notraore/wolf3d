@@ -83,13 +83,6 @@ void		ray_draw(t_all *all, int x)
 	ft_line(all, x, drawstart, drawend);
 }
 
-void		hud_loop_update(t_all *all)
-{
-	all->radar += 0.001;
-	if (all->reticule > 5)
-		all->reticule -= 0.001;
-}
-
 void		raycast(t_all *all)
 {
 	int x;
@@ -114,6 +107,8 @@ int			ft_loop(t_all *all)
 		return (0);
 	all->p->next_frame = all->p->last_frame + (CLOCKS_PER_SEC / 100);
 	raycast(all);
+	ft_draw_minimap(all);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
+	mlx_string_put(all->e->mlx, all->e->win, 150, 1, RED, "N");
 	return (0);
 }
