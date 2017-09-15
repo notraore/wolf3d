@@ -39,8 +39,11 @@ int			ft_hooks(int keycode, t_all *all)
 		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
 	printf("%d\n", keycode);
 	mlx_destroy_image(all->e->mlx, all->e->img);
+	// mlx_destroy_image(all->e->mlx, all->gun->img);
 	// ft_bzero(all->e->img, sizeof(void *));
 	all->e->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/Sky.xpm",
 	&(all->e->sl), &all->e->bpp);
+	// all->gun->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/blaz.xpm",
+	// &(all->gun->sl), &all->gun->bpp);
 	return (0);
 }

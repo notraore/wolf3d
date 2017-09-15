@@ -113,5 +113,6 @@ int			ft_loop(t_all *all)
 		mlx_string_put(all->e->mlx, all->e->win, 150, 1, RED, "N");
 	}
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun, 0, 0);
 	return (0);
 }
