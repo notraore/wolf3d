@@ -14,5 +14,4 @@
 
 void		load_xpm_files(t_all *all)
 {
-
 }

@@ -33,7 +33,13 @@ int			ft_hooks(int keycode, t_all *all)
 		rot_left(all);
 	if (keycode == 49)
 		all->reticule = 20;
+	if (keycode == 46)
+		all->hide_map = all->hide_map == 1 ? 0 : 1;
+	if (keycode == 4)
+		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
+	printf("%d\n", keycode);
 	mlx_destroy_image(all->e->mlx, all->e->img);
+	// ft_bzero(all->e->img, sizeof(void *));
 	all->e->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/Sky.xpm",
 	&(all->e->sl), &all->e->bpp);
 	return (0);

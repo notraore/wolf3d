@@ -28,7 +28,7 @@ void			ft_draw_minimap(t_all *all)
 		i = 0;
 		while (i < all->i)
 		{
-			if (all->map[j][i] == 1)
+			if (all->map[j][i] == 1 && (x > 0 && x < W) && (y > 0 && y < H))
 				all->e->img_datas[x + y * W] = WHITE;
 			i++;
 			x += 4;
@@ -41,16 +41,19 @@ void			ft_draw_minimap(t_all *all)
 
 void			ft_map_reticule_hud(t_all *all)
 {
-	all->clr = RED;
-	draw_circle(W / 2, H / 2, all->reticule, all);
-	all->clr = WHITE;
-	draw_circle(W - 150, 600, 100, all);
-	all->clr = GREEN;
-	draw_circle(W - 150, 600, 3, all);
-	all->clr = WHITE;
-	draw_circle(W - 150, 600, all->radar, all);
-	if (all->radar >= 100)
-		all->radar = 4;
+	if (all->hide_hud == 0)
+	{
+		all->clr = RED;
+		draw_circle(W / 2, H / 2, all->reticule, all);
+		all->clr = WHITE;
+		draw_circle(W - 150, 600, 100, all);
+		all->clr = GREEN;
+		draw_circle(W - 150, 600, 3, all);
+		all->clr = WHITE;
+		draw_circle(W - 150, 600, all->radar, all);
+		if (all->radar >= 100)
+			all->radar = 4;
+	}
 }
 
 void			hud_loop_update(t_all *all)

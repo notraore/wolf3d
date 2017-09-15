@@ -30,8 +30,7 @@ void		all_init(t_all *all, int x)
 
 void		init_player(t_all *all)
 {
-	all->p->posx = all->j / 2;
-	all->p->posy = *all->taille / 2;
+	all->hide_map = 1;
 	all->p->dirx = -1;
 	all->p->diry = 0;
 	all->p->planex = 0;

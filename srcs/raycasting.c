@@ -60,10 +60,10 @@ void		ray_lenght(t_all *all)
 			all->m->hit = 1;
 	}
 	if (all->m->side == 0)
-		all->m->perpwalldist = (all->m->mapx - all->p->rayposx +
+		all->m->perpwalldist = 0.2 + (all->m->mapx - all->p->rayposx +
 		(1 - all->m->stepx) / 2) / all->p->raydirx;
 	else
-		all->m->perpwalldist = (all->m->mapy - all->p->rayposy +
+		all->m->perpwalldist = 0.2 + (all->m->mapy - all->p->rayposy +
 		(1 - all->m->stepy) / 2) / all->p->raydiry;
 }
 
@@ -107,8 +107,11 @@ int			ft_loop(t_all *all)
 		return (0);
 	all->p->next_frame = all->p->last_frame + (CLOCKS_PER_SEC / 100);
 	raycast(all);
-	ft_draw_minimap(all);
+	if (all->hide_map == 1)
+	{
+		ft_draw_minimap(all);
+		mlx_string_put(all->e->mlx, all->e->win, 150, 1, RED, "N");
+	}
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
-	mlx_string_put(all->e->mlx, all->e->win, 150, 1, RED, "N");
 	return (0);
 }

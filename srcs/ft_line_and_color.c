@@ -14,7 +14,7 @@
 
 int			get_color(t_all *all)
 {
-	if (all->m->side)
+	if (all->m->side == 1)
 	{
 		if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 			(all->m->stepx == 1 && all->m->stepy == -1))

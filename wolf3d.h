@@ -139,9 +139,9 @@ struct						s_all
 	int						cirdy;
 	int						cirerr;
 
-	int						start;
-	int						end;
-
+	int						hide_hud;
+	int						hide_map;
+	int						one_x;
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
@@ -180,7 +180,9 @@ int							ft_loop(t_all *all);
 **error.c
 */
 void						ft_help(void);
+void						ft_print_player_pos_error(t_all *all);
 void						ft_print_err(int argc);
+void						check_file(t_all *all);
 
 /*
 **inits.c

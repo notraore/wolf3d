@@ -37,6 +37,13 @@ int				open_close_fd(t_all *all)
 	return (i);
 }
 
+void			ft_player_position(t_all *all, int x, int y)
+{
+	all->one_x += 1;
+	all->p->posx = y;
+	all->p->posy = x;
+}
+
 void			ft_parce_file(t_all *all)
 {
 	if (!(all->i = open_close_fd(all)))
@@ -53,40 +60,17 @@ void			ft_parce_file(t_all *all)
 		all->map[all->j] = ft_memalloc(sizeof(int) * all->i + 1);
 		all->i = -1;
 		while (all->tmp[all->i += 1])
+		{
+			if (ft_strcmp(all->tmp[all->i], "x") == 0)
+				ft_player_position(all, all->i, all->j);
 			all->map[all->j][all->i] = ft_atoi(all->tmp[all->i]);
+		}
 		all->taille[all->j] = all->i;
 		free_tab(all->tmp);
 		free(all->line);
 		all->j += 1;
 	}
 	all->map[all->j] = NULL;
-}
-
-void			check_file(t_all *all)
-{
-	int i;
-	int j;
-	int last;
-
-	i = 0;
-	j = 0;
-	last = all->i - 1;
-	while (j < all->j)
-	{
-		i = 0;
-		while (i < all->i)
-		{
-			if (j == 0 || j == all->j)
-			{
-				if (all->map[j][i] == 0)
-					ft_kill("Map not well closed. Please check map borders.");
-			}
-			if (all->map[j][0] == 0 || all->map[j][last] == 0)
-				ft_kill("Map not well closed. Please check map borders.");
-			i++;
-		}
-		j++;
-	}
 }
 
 void			ft_mlx(t_all *all)
