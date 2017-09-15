@@ -108,11 +108,9 @@ int			ft_loop(t_all *all)
 	all->p->next_frame = all->p->last_frame + (CLOCKS_PER_SEC / 100);
 	raycast(all);
 	if (all->hide_map == 1)
-	{
 		ft_draw_minimap(all);
-		mlx_string_put(all->e->mlx, all->e->win, 150, 1, RED, "N");
-	}
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun, 0, 0);
+	if (all->reticule <= 10)
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2, 400);
 	return (0);
 }

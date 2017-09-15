@@ -81,13 +81,14 @@ void			ft_mlx(t_all *all)
 
 	all->e->win = mlx_new_window(all->e->mlx, W, H, "WOLF3D");
 
-	all->gun = mlx_xpm_file_to_image(all->e->mlx,
-	"./Textures/blaz.xpm", &(all->e->sl), &all->e->bpp);
+	all->gun_0 = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/uzi_walk.xpm", &(all->e->sl), &all->e->bpp);
+
+	all->gun_1 = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/uzi_fire.xpm", &(all->e->sl), &all->e->bpp);
 
 	all->e->img_datas = (int *)mlx_get_data_addr(all->e->img,
 	&(all->e->bpp), &(all->e->sl), &(all->e->end));
-	// all->gun->img_datas = (int *)mlx_get_data_addr(all->gun->img,
-	// &(all->gun->bpp), &(all->gun->sl), &(all->gun->end));
 }
 
 int				main(int argc, char **argv)

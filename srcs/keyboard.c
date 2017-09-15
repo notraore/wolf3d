@@ -32,18 +32,18 @@ int			ft_hooks(int keycode, t_all *all)
 	if (keycode == 0)
 		rot_left(all);
 	if (keycode == 49)
+	{
+		all->fire = 1;
 		all->reticule = 20;
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_1, W / 2, 400);
+	}
 	if (keycode == 46)
 		all->hide_map = all->hide_map == 1 ? 0 : 1;
 	if (keycode == 4)
 		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
 	printf("%d\n", keycode);
 	mlx_destroy_image(all->e->mlx, all->e->img);
-	// mlx_destroy_image(all->e->mlx, all->gun->img);
-	// ft_bzero(all->e->img, sizeof(void *));
 	all->e->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/Sky.xpm",
 	&(all->e->sl), &all->e->bpp);
-	// all->gun->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/blaz.xpm",
-	// &(all->gun->sl), &all->gun->bpp);
 	return (0);
 }

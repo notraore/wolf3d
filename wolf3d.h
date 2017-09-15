@@ -142,12 +142,14 @@ struct						s_all
 	int						hide_hud;
 	int						hide_map;
 	int						one_x;
+	int						fire;
 
 	int						sl;
 	int						bpp;
 	int						end;
 	int						*img_datas;
-	void					*gun;
+	void					*gun_0;
+	void					*gun_1;
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
