@@ -105,7 +105,6 @@ int			ft_loop(t_all *all)
 	all->oldtime = all->time;
 	all->time = clock();
 	all->frame_time = (all->time - all->oldtime) / 1000.0;
-	printf("fps = %f3\n", 1.0 / all->frame_time);
 	raycast(all);
 	if (all->hide_map == 1)
 		ft_draw_minimap(all);
