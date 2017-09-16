@@ -12,6 +12,24 @@
 
 #include "../wolf3d.h"
 
-void		load_xpm_files(t_all *all)
+void			load_texture_pack(t_all *all)
 {
+	if (!((all->e->img = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/Sky.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->gun_0 = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/uzi_walk.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->gun_1 = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/uzi_fire.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->blaz_face = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/blazkowicz.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->bullet = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/bullet.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->infini = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/infini.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
 }

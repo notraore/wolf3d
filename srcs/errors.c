@@ -14,7 +14,7 @@
 
 void			ft_help(void)
 {
-	ft_putendl("usage : ./wolf3d [.map]");
+	ft_putendl("usage : ./wolf3d [map]");
 	ft_putstr("You can Created a map using 0 for walkable ");
 	ft_putendl("floor and 1 for walls.");
 	exit(EXIT_FAILURE);
@@ -23,7 +23,7 @@ void			ft_help(void)
 void			ft_print_err(int argc)
 {
 	if (argc > 2)
-		write(2, "\n\t\t\t*****Too many arguments.*****\n", 34);
+		write(2, "The game can launch only one map at once.\n", 42);
 	if (argc < 2)
 		ft_putendl("Please. Enter a map name to display.");
 	ft_help();

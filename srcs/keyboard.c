@@ -19,6 +19,14 @@ void		proper_exit(t_all *all)
 	exit(EXIT_SUCCESS);
 }
 
+void		fire_reticule(t_all *all)
+{
+	all->fire = 1;
+	all->reticule = 20;
+	mlx_put_image_to_window(all->e->mlx, all->e->win,
+	all->gun_1, W / 2, 400);
+}
+
 int			ft_hooks(int keycode, t_all *all)
 {
 	if (keycode == 53)
@@ -32,11 +40,7 @@ int			ft_hooks(int keycode, t_all *all)
 	if (keycode == 0)
 		rot_left(all);
 	if (keycode == 49)
-	{
-		all->fire = 1;
-		all->reticule = 20;
-		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_1, W / 2, 400);
-	}
+		fire_reticule(all);
 	if (keycode == 46)
 		all->hide_map = all->hide_map == 1 ? 0 : 1;
 	if (keycode == 4)

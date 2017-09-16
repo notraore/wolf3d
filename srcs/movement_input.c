@@ -12,6 +12,22 @@
 
 #include "../wolf3d.h"
 
+void		hand_movement(t_all *all)
+{
+	if (all->hand_h <= 0)
+	{
+		all->hand_h = 0;
+		all->mima = 70;
+	}
+	if (all->hand_h <= all->mima)
+		all->hand_h += 9;
+	if (all->hand_h >= all->mima)
+	{
+		all->mima = 0;
+		all->hand_h -= 9;
+	}
+}
+
 void		forward_vector(t_all *all)
 {
 	if (all->map[(int)(all->p->posx + all->p->dirx * all->p->movespeed)]
@@ -20,6 +36,7 @@ void		forward_vector(t_all *all)
 	if (all->map[(int)(all->p->posx)][(int)(all->p->posy + all->p->diry
 	* all->p->movespeed)] == 0)
 		all->p->posy += all->p->diry * all->p->movespeed;
+	hand_movement(all);
 }
 
 void		back_vector(t_all *all)
@@ -30,6 +47,7 @@ void		back_vector(t_all *all)
 	if (all->map[(int)(all->p->posx)][(int)(all->p->posy + all->p->diry
 	* all->p->movespeed)] == 0)
 		all->p->posy -= all->p->diry * all->p->movespeed;
+	hand_movement(all);
 }
 
 void		rot_right(t_all *all)

@@ -143,6 +143,9 @@ struct						s_all
 	int						hide_map;
 	int						one_x;
 	int						fire;
+	double					hand_h;
+	double					mima;
+
 
 	int						sl;
 	int						bpp;
@@ -150,6 +153,9 @@ struct						s_all
 	int						*img_datas;
 	void					*gun_0;
 	void					*gun_1;
+	void					*blaz_face;
+	void					*bullet;
+	void					*infini;
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
@@ -172,6 +178,7 @@ void						forward_vector(t_all *all);
 void						back_vector(t_all *all);
 void						rot_right(t_all *all);
 void						rot_left(t_all *all);
+void						hand_movement(t_all *all);
 
 /*
 **raycasting.c
@@ -207,6 +214,7 @@ int							get_color(t_all *all);
 */
 int							ft_hooks(int keycode, t_all *all);
 void						proper_exit(t_all *all);
+void						fire_reticule(t_all *all);
 
 /*
 **draw_formes.c
@@ -220,5 +228,10 @@ void						draw_circle(int x0, int y0, int radius, t_all *all);
 void						ft_draw_minimap(t_all *all);
 void						ft_map_reticule_hud(t_all *all);
 void						hud_loop_update(t_all *all);
+
+/*
+**load_texture.c
+*/
+void						load_texture_pack(t_all *all);
 
 #endif

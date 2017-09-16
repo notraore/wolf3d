@@ -111,6 +111,10 @@ int			ft_loop(t_all *all)
 		ft_draw_minimap(all);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
 	if (all->reticule <= 10)
-		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2, 400);
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2
+		+ (all->hand_h / 2), 400 + all->hand_h);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->blaz_face, W - 100, 0);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->bullet, 0, H - 100);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->infini, 0, H - 80);
 	return (0);
 }

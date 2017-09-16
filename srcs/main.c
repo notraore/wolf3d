@@ -47,7 +47,7 @@ void			ft_player_position(t_all *all, int x, int y)
 void			ft_parce_file(t_all *all)
 {
 	if (!(all->i = open_close_fd(all)))
-		exit(EXIT_FAILURE);
+		ft_kill("Map doesn't exist. Please, enter a valid map name.");
 	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
 	all->map = (int **)ft_memalloc(sizeof(int *) * all->i + 1);
 	all->taille = (int *)ft_memalloc(sizeof(int) * all->i + 1);
@@ -76,17 +76,8 @@ void			ft_parce_file(t_all *all)
 void			ft_mlx(t_all *all)
 {
 	all->e->mlx = mlx_init();
-	all->e->img = mlx_xpm_file_to_image(all->e->mlx,
-	"./Textures/Sky.xpm", &(all->e->sl), &all->e->bpp);
-
+	load_texture_pack(all);
 	all->e->win = mlx_new_window(all->e->mlx, W, H, "WOLF3D");
-
-	all->gun_0 = mlx_xpm_file_to_image(all->e->mlx,
-	"./Textures/uzi_walk.xpm", &(all->e->sl), &all->e->bpp);
-
-	all->gun_1 = mlx_xpm_file_to_image(all->e->mlx,
-	"./Textures/uzi_fire.xpm", &(all->e->sl), &all->e->bpp);
-
 	all->e->img_datas = (int *)mlx_get_data_addr(all->e->img,
 	&(all->e->bpp), &(all->e->sl), &(all->e->end));
 }
