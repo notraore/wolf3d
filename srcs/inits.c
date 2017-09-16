@@ -30,13 +30,12 @@ void		all_init(t_all *all, int x)
 
 void		init_player(t_all *all)
 {
-	all->hide_map = 1;
+	all->hide_map = 0;
 	all->p->dirx = -1;
 	all->p->diry = 0;
 	all->p->planex = 0;
 	all->p->planey = 0.66;
-	all->p->last_frame = clock();
-	all->p->next_frame = 0;
+	all->time = clock();
 	all->p->movespeed = 0.15;
 	all->p->rotspeed = 0.05;
 	all->reticule = 5;

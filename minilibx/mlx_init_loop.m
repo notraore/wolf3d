@@ -137,7 +137,6 @@ void	mlx_int_loop_once()
     }
 }
 
-
 int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
 {
   mlx_win_list_t *win;
@@ -157,7 +156,6 @@ int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
     }
   return (0);
 }
-
 
 int mlx_loop_hook(mlx_ptr_t *mlx_ptr, void (*fct)(void *), void *param)
 {

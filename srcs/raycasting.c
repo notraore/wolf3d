@@ -102,10 +102,10 @@ void		raycast(t_all *all)
 
 int			ft_loop(t_all *all)
 {
-	all->p->last_frame = clock();
-	if (all->p->next_frame > all->p->last_frame)
-		return (0);
-	all->p->next_frame = all->p->last_frame + (CLOCKS_PER_SEC / 100);
+	all->oldtime = all->time;
+	all->time = clock();
+	all->frame_time = (all->time - all->oldtime) / 1000.0;
+	printf("fps = %f3\n", 1.0 / all->frame_time);
 	raycast(all);
 	if (all->hide_map == 1)
 		ft_draw_minimap(all);
@@ -113,8 +113,11 @@ int			ft_loop(t_all *all)
 	if (all->reticule <= 10)
 		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2
 		+ (all->hand_h / 2), 400 + all->hand_h);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->blaz_face, W - 100, 0);
+	mlx_put_image_to_window(all->e->mlx, all->e->win, all->blaz_f, W - 100, 0);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->bullet, 0, H - 100);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->infini, 0, H - 80);
+	mlx_string_put(all->e->mlx, all->e->win, 15, 15, WHITE, "FPS : ");
+	mlx_string_put(all->e->mlx, all->e->win, 70, 15, WHITE,
+	ft_itoa(all->frame_time + 81));
 	return (0);
 }

@@ -15,7 +15,7 @@
 void			ft_help(void)
 {
 	ft_putendl("usage : ./wolf3d [map]");
-	ft_putstr("You can Created a map using 0 for walkable ");
+	ft_putstr("You can create a map using 0 for walkable ");
 	ft_putendl("floor and 1 for walls.");
 	exit(EXIT_FAILURE);
 }

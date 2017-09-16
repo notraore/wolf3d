@@ -57,8 +57,6 @@ struct						s_ply
 	double					rotspeed;
 	double					movespeed;
 	double					deltatime;
-	clock_t					last_frame;
-	clock_t					next_frame;
 };
 
 struct						s_map
@@ -146,16 +144,19 @@ struct						s_all
 	double					hand_h;
 	double					mima;
 
-
 	int						sl;
 	int						bpp;
 	int						end;
 	int						*img_datas;
 	void					*gun_0;
 	void					*gun_1;
-	void					*blaz_face;
+	void					*blaz_f;
 	void					*bullet;
 	void					*infini;
+	clock_t					time;
+	clock_t					oldtime;
+	clock_t					frame_time;
+
 	t_env					*e;
 	t_map					*m;
 	t_draw					*d;
