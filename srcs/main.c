@@ -73,13 +73,18 @@ void			ft_parce_file(t_all *all)
 	all->map[all->j] = NULL;
 }
 
-void			ft_mlx(t_all *all)
+int				ft_tile_screen(t_all *all)
 {
-	all->e->mlx = mlx_init();
-	load_texture_pack(all);
-	all->e->win = mlx_new_window(all->e->mlx, W, H, "WOLF3D");
-	all->e->img_datas = (int *)mlx_get_data_addr(all->e->img,
-	&(all->e->bpp), &(all->e->sl), &(all->e->end));
+	if (all->go == 0)
+	{
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->tile, 0, 0);
+		if (all->loop < 40)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100, RED,
+			"PRESS ANY KEY TO START");
+		system("killall afplay 2&>/dev/null >/dev/null\n \
+		afplay ./song/lac.mp3&");
+	}
+	return (0);
 }
 
 int				main(int argc, char **argv)
@@ -97,11 +102,13 @@ int				main(int argc, char **argv)
 	ft_parce_file(&all);
 	check_file(&all);
 	ft_mlx(&all);
-	ft_draw_minimap(&all);
 	init_player(&all);
+	ft_draw_minimap(&all);
+	ft_tile_screen(&all);
 	all.m = &map;
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
-	mlx_hook(env.win, 2, (1L >> 0), ft_hooks, &all);
+	mlx_hook(env.win, 2, (1L << 0), key_press, &all);
+	mlx_hook(env.win, 3, (1L << 1), key_release, &all);
 	mlx_loop(env.mlx);
 	return (EXIT_SUCCESS);
 }

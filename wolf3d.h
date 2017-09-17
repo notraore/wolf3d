@@ -23,6 +23,7 @@
 # define WHITE 0xFFFFFF
 # define YELLOW 0xFFFF00
 # define GREEN 0x00FF00
+# define ORG 0xFFA500
 # define BLACK 0x00000
 
 # include "./libft/libft.h"
@@ -85,12 +86,6 @@ struct						s_draw
 	int						err;
 };
 
-struct						s_coords
-{
-	int						x;
-	int						y;
-};
-
 struct						s_env
 {
 	int						sl;
@@ -109,7 +104,6 @@ struct						s_all
 	int						j;
 	int						fd;
 	int						clr;
-	int						h_copy;
 	int						**map;
 	int						value;
 	int						*taille;
@@ -144,18 +138,31 @@ struct						s_all
 	double					hand_h;
 	double					mima;
 
-	int						sl;
-	int						bpp;
-	int						end;
-	int						*img_datas;
 	void					*gun_0;
 	void					*gun_1;
 	void					*blaz_f;
 	void					*bullet;
 	void					*infini;
+	void					*tile;
+	void					*over;
+	unsigned int			ammo;
+
+	int						sl;
+	int						bpp;
+	int						end;
+	int						*img_datas;
 	clock_t					time;
 	clock_t					oldtime;
 	clock_t					frame_time;
+
+	int						up;
+	int						down;
+	int						left;
+	int						right;
+
+	int						go;
+	bool					game;
+	double					loop;
 
 	t_env					*e;
 	t_map					*m;
@@ -167,19 +174,18 @@ struct						s_all
 **main.c
 */
 int							open_close_fd(t_all *all);
-void						ft_draw_minimap(t_all *all);
+void						ft_player_position(t_all *all, int x, int y);
 void						ft_parce_file(t_all *all);
-void						check_file(t_all *all);
-void						ft_display_bousole(t_all *all);
+int							ft_tile_screen(t_all *all);
 
 /*
 **movement_input.c
 */
+void						hand_movement(t_all *all);
 void						forward_vector(t_all *all);
 void						back_vector(t_all *all);
 void						rot_right(t_all *all);
 void						rot_left(t_all *all);
-void						hand_movement(t_all *all);
 
 /*
 **raycasting.c
@@ -194,34 +200,39 @@ int							ft_loop(t_all *all);
 **error.c
 */
 void						ft_help(void);
-void						ft_print_player_pos_error(t_all *all);
 void						ft_print_err(int argc);
+void						ft_print_player_pos_error(t_all *all);
 void						check_file(t_all *all);
 
 /*
 **inits.c
 */
+void						ft_mlx(t_all *all);
 void						all_init(t_all *all, int x);
 void						init_player(t_all *all);
 
 /*
 **ft_line_and_color.c
 */
-void						ft_line(t_all *all, int x, int start, int end);
 int							get_color(t_all *all);
+void						ft_line(t_all *all, int x, int start, int end);
 
 /*
 **keyboard.c
 */
-int							ft_hooks(int keycode, t_all *all);
 void						proper_exit(t_all *all);
-void						fire_reticule(t_all *all);
+void						move(t_all *all);
+void						fire_shot(t_all *all);
+int							key_press(int keycode, t_all *all);
+int							key_release(int keycode, t_all *all);
 
 /*
 **draw_formes.c
 */
-void						ft_bresenham(t_all *all);
+void						circle_init(t_all *all, int radius);
 void						draw_circle(int x0, int y0, int radius, t_all *all);
+void						line_init(t_all *all);
+void						ft_bresenham(t_all *all);
 
 /*
 **hud.c
@@ -229,7 +240,14 @@ void						draw_circle(int x0, int y0, int radius, t_all *all);
 void						ft_draw_minimap(t_all *all);
 void						ft_map_reticule_hud(t_all *all);
 void						hud_loop_update(t_all *all);
+void						fire_reticule(t_all *all);
 
+/*
+**hud_2.c
+*/
+void						loop_hud(t_all *all);
+void						ft_game_over(t_all *all);
+void						ft_ggwp(t_all *all);
 /*
 **load_texture.c
 */

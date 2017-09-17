@@ -32,4 +32,10 @@ void			load_texture_pack(t_all *all)
 	if (!((all->infini = mlx_xpm_file_to_image(all->e->mlx,
 	"./Textures/infini.xpm", &(all->e->sl), &all->e->bpp))))
 		ft_kill("Texture error");
+	if (!((all->tile = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/tile.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->over = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/gameover.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
 }

@@ -22,13 +22,13 @@ void			ft_draw_minimap(t_all *all)
 	i = 0;
 	j = 0;
 	x = 20;
-	y = 20;
+	y = 50;
 	while (j < all->j)
 	{
 		i = 0;
 		while (i < all->i)
 		{
-			if (all->map[j][i] == 1 && (x > 0 && x < W) && (y > 0 && y < H))
+			if (all->map[j][i] != 0 && (x > 0 && x < W) && (y > 0 && y < H))
 				all->e->img_datas[x + y * W] = WHITE;
 			i++;
 			x += 4;
@@ -45,20 +45,30 @@ void			ft_map_reticule_hud(t_all *all)
 	{
 		all->clr = RED;
 		draw_circle(W / 2, H / 2, all->reticule, all);
-		all->clr = WHITE;
-		draw_circle(W - 150, 600, 100, all);
 		all->clr = GREEN;
-		draw_circle(W - 150, 600, 3, all);
+		draw_circle(W - 200, 200, 3, all);
 		all->clr = WHITE;
-		draw_circle(W - 150, 600, all->radar, all);
-		if (all->radar >= 100)
-			all->radar = 4;
+		if (all->radar <= 50)
+			all->clr = ORG;
+		if (all->radar <= 20)
+			all->clr = RED;
+		draw_circle(W - 200, 200, all->radar, all);
 	}
 }
 
 void			hud_loop_update(t_all *all)
 {
-	all->radar += 0.001;
+	all->radar -= 0.00006;
 	if (all->reticule > 5)
 		all->reticule -= 0.001;
 }
+
+void		fire_reticule(t_all *all)
+{
+	if (all->fire == 1)
+		all->reticule = 20;
+	mlx_put_image_to_window(all->e->mlx, all->e->win,
+	all->gun_1, W / 2, 400);
+	system("afplay ./song/fire.mp3&");
+}
+

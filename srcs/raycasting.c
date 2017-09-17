@@ -56,14 +56,14 @@ void		ray_lenght(t_all *all)
 			all->m->mapy += all->m->stepy;
 			all->m->side = 1;
 		}
-		if (all->map[all->m->mapx][all->m->mapy] > 0)
+		if (all->map[all->m->mapx][all->m->mapy] != 0)
 			all->m->hit = 1;
 	}
 	if (all->m->side == 0)
-		all->m->perpwalldist = 0.2 + (all->m->mapx - all->p->rayposx +
+		all->m->perpwalldist = (all->m->mapx - all->p->rayposx +
 		(1 - all->m->stepx) / 2) / all->p->raydirx;
 	else
-		all->m->perpwalldist = 0.2 + (all->m->mapy - all->p->rayposy +
+		all->m->perpwalldist = (all->m->mapy - all->p->rayposy +
 		(1 - all->m->stepy) / 2) / all->p->raydiry;
 }
 
@@ -90,13 +90,16 @@ void		raycast(t_all *all)
 	x = -1;
 	all->p->rayposx = all->p->posx;
 	all->p->rayposy = all->p->posy;
-	while (++x < W)
+	if (all->go == 1)
 	{
-		all_init(all, x);
-		step_side_nbr(all);
-		ray_lenght(all);
-		ray_draw(all, x);
-		hud_loop_update(all);
+		while (++x < W)
+		{
+			all_init(all, x);
+			step_side_nbr(all);
+			ray_lenght(all);
+			ray_draw(all, x);
+			hud_loop_update(all);
+		}
 	}
 }
 
@@ -105,18 +108,25 @@ int			ft_loop(t_all *all)
 	all->oldtime = all->time;
 	all->time = clock();
 	all->frame_time = (all->time - all->oldtime) / 1000.0;
-	raycast(all);
-	if (all->hide_map == 1)
-		ft_draw_minimap(all);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
-	if (all->reticule <= 10)
-		mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2
-		+ (all->hand_h / 2), 400 + all->hand_h);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->blaz_f, W - 100, 0);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->bullet, 0, H - 100);
-	mlx_put_image_to_window(all->e->mlx, all->e->win, all->infini, 0, H - 80);
-	mlx_string_put(all->e->mlx, all->e->win, 15, 15, WHITE, "FPS : ");
-	mlx_string_put(all->e->mlx, all->e->win, 70, 15, WHITE,
-	ft_itoa(all->frame_time + 81));
+	if (all->go == 1)
+	{
+		if (all->radar > 0)
+		{
+			move(all);
+			raycast(all);
+		}
+		if (all->hide_map == 1)
+			ft_draw_minimap(all);
+		ft_map_reticule_hud(all);
+		mlx_put_image_to_window(all->e->mlx, all->e->win, all->e->img, 0, 0);
+		if (all->reticule <= 15)
+			mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2
+			+ (all->hand_h / 2), 400 + all->hand_h);
+		loop_hud(all);
+		if (all->radar <= 0)
+			ft_game_over(all);
+		if ((int)all->p->posx == 3)
+			ft_ggwp(all);
+	}
 	return (0);
 }

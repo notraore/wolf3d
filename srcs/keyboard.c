@@ -16,37 +16,74 @@ void		proper_exit(t_all *all)
 {
 	mlx_destroy_image(all->e->mlx, all->e->img);
 	ft_bzero(&all, sizeof(t_all));
+	system("killall afplay 2&>/dev/null >/dev/null");
 	exit(EXIT_SUCCESS);
 }
 
-void		fire_reticule(t_all *all)
+void		move(t_all *all)
 {
-	all->fire = 1;
-	all->reticule = 20;
-	mlx_put_image_to_window(all->e->mlx, all->e->win,
-	all->gun_1, W / 2, 400);
-}
-
-int			ft_hooks(int keycode, t_all *all)
-{
-	if (keycode == 53)
-		proper_exit(all);
-	if (keycode == 13 || keycode == 126)
-		forward_vector(all);
-	if (keycode == 1 || keycode == 125)
-		back_vector(all);
-	if (keycode == 2 || keycode == 124)
-		rot_right(all);
-	if (keycode == 0 || keycode == 123)
-		rot_left(all);
-	if (keycode == 49)
-		fire_reticule(all);
-	if (keycode == 46)
-		all->hide_map = all->hide_map == 1 ? 0 : 1;
-	if (keycode == 4)
-		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
+	forward_vector(all);
+	back_vector(all);
+	rot_right(all);
+	rot_left(all);
 	mlx_destroy_image(all->e->mlx, all->e->img);
 	all->e->img = mlx_xpm_file_to_image(all->e->mlx, "./Textures/Sky.xpm",
 	&(all->e->sl), &all->e->bpp);
+}
+
+void		fire_shot(t_all *all)
+{
+	all->fire = 1;
+	if (all->ammo > 0)
+	{
+		fire_reticule(all);
+		all->ammo -= 1;
+		all->radar += 30;
+	}
+	else
+		system("afplay ./song/empty.mp3&");
+}
+
+int			key_press(int keycode, t_all *all)
+{
+	if (keycode == 49 && all->go == 1)
+		fire_shot(all);
+	if (keycode == 53)
+		proper_exit(all);
+	if ((keycode == 13 || keycode == 126) && all->go == 1)
+		all->up = 1;
+	if ((keycode == 1 || keycode == 125) && all->go == 1)
+		all->down = 1;
+	if ((keycode == 2 || keycode == 124) && all->go == 1)
+		all->right = 1;
+	if ((keycode == 0 || keycode == 123) && all->go == 1)
+		all->left = 1;
+	if (keycode == 46 && all->go == 1)
+		all->hide_map = all->hide_map == 1 ? 0 : 1;
+	if (keycode == 4 && all->go == 1)
+		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
+	if (all->go == 0 && all->game == 0)
+	{
+		all->go = 1;
+		all->game = 1;
+		system("killall afplay 2&>/dev/null >/dev/null\n \
+		afplay ./song/ingame.mp3&");
+		mlx_destroy_image(all->e->mlx, all->tile);
+	}
+	return (0);
+}
+
+int			key_release(int keycode, t_all *all)
+{
+	if (keycode == 49)
+		all->fire = 0;
+	if (keycode == 13 || keycode == 126)
+		all->up = 0;
+	if (keycode == 1 || keycode == 125)
+		all->down = 0;
+	if (keycode == 2 || keycode == 124)
+		all->right = 0;
+	if (keycode == 0 || keycode == 123)
+		all->left = 0;
 	return (0);
 }

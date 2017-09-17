@@ -43,6 +43,5 @@ void		ft_line(t_all *all, int x, int start, int end)
 		i = end - 1;
 		while (++i < H)
 			all->e->img_datas[x + i * W] = FGREY;
-		ft_map_reticule_hud(all);
 	}
 }
