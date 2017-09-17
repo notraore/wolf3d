@@ -12,12 +12,13 @@
 
 #include "../wolf3d.h"
 
-void		proper_exit(t_all *all)
+int		proper_exit(t_all *all)
 {
 	mlx_destroy_image(all->e->mlx, all->e->img);
 	ft_bzero(&all, sizeof(t_all));
 	system("killall afplay 2&>/dev/null >/dev/null");
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 void		move(t_all *all)

@@ -220,7 +220,7 @@ void						ft_line(t_all *all, int x, int start, int end);
 /*
 **keyboard.c
 */
-void						proper_exit(t_all *all);
+int							proper_exit(t_all *all);
 void						move(t_all *all);
 void						fire_shot(t_all *all);
 int							key_press(int keycode, t_all *all);

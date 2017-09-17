@@ -109,6 +109,8 @@ int				main(int argc, char **argv)
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L << 0), key_press, &all);
 	mlx_hook(env.win, 3, (1L << 1), key_release, &all);
+	mlx_hook(env.win, 17, (1L << 17), proper_exit, &all);
+
 	mlx_loop(env.mlx);
 	return (EXIT_SUCCESS);
 }
