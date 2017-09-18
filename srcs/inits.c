@@ -21,7 +21,7 @@ void			ft_mlx(t_all *all)
 	&(all->e->bpp), &(all->e->sl), &(all->e->end));
 }
 
-void		all_init(t_all *all, int x)
+void			all_init(t_all *all, int x)
 {
 	all->m->mapx = (int)all->p->rayposx;
 	all->m->mapy = (int)all->p->rayposy;
@@ -37,17 +37,17 @@ void		all_init(t_all *all, int x)
 	all->m->perpwalldist = -1;
 }
 
-void		init_player(t_all *all)
+void			init_player(t_all *all)
 {
-	all->hide_map = 0;
+	all->hide_map = 1;
 	all->p->dirx = -1;
 	all->p->diry = 0;
 	all->p->planex = 0;
 	all->p->planey = 0.66;
 	all->time = clock();
-	all->p->movespeed = 0.20;
-	all->p->rotspeed = 0.1;
+	all->p->movespeed = 0.05;
+	all->p->rotspeed = 0.05;
 	all->reticule = 5;
 	all->radar = 100;
-	all->ammo = 2;
+	all->ammo = 300;
 }

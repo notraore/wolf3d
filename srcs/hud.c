@@ -63,7 +63,7 @@ void			hud_loop_update(t_all *all)
 		all->reticule -= 0.001;
 }
 
-void		fire_reticule(t_all *all)
+void			fire_reticule(t_all *all)
 {
 	if (all->fire == 1)
 		all->reticule = 20;
@@ -71,4 +71,3 @@ void		fire_reticule(t_all *all)
 	all->gun_1, W / 2, 400);
 	system("afplay ./song/fire.mp3&");
 }
-

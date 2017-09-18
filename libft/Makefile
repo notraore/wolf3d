@@ -12,7 +12,7 @@
 
 NAME=libft.a
 CC=gcc
-FLAGS=-Werror -Wextra -Wall
+FLAGS=-Werror -Wextra -Wall -g
 SRC_PATH=./srcs/
 SRC=ft_itoa.c ft_memmove.c ft_putnbr_fd.c ft_strcpy.c ft_strlcat.c ft_strnequ.c ft_atoi.c\
 ft_memalloc.c ft_memset.c ft_putstr.c ft_strdel.c ft_strlen.c ft_strnew.c ft_bzero.c\

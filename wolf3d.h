@@ -27,7 +27,7 @@
 # define BLACK 0x00000
 
 # include "./libft/libft.h"
-# include "./minilibx/mlx.h"
+# include "./minilibx_macos/mlx.h"
 # include <math.h>
 # include <time.h>
 # include <stdbool.h>

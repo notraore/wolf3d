@@ -123,7 +123,7 @@ void	mlx_int_loop_once()
   thedate = [NSDate dateWithTimeIntervalSinceNow:0.1];
   while (42)
     {
-      event = [NSApp nextEventMatchingMask:NSEventMaskAny
+      event = [NSApp nextEventMatchingMask:NSAnyEventMask
 		     untilDate:thedate
 		     inMode:NSDefaultRunLoopMode
 		     dequeue:YES];
@@ -136,6 +136,7 @@ void	mlx_int_loop_once()
       [NSApp updateWindows];
     }
 }
+
 
 int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
 {
@@ -156,6 +157,7 @@ int     mlx_do_sync(mlx_ptr_t *mlx_ptr)
     }
   return (0);
 }
+
 
 int mlx_loop_hook(mlx_ptr_t *mlx_ptr, void (*fct)(void *), void *param)
 {

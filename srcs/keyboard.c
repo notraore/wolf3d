@@ -12,7 +12,7 @@
 
 #include "../wolf3d.h"
 
-int		proper_exit(t_all *all)
+int			proper_exit(t_all *all)
 {
 	mlx_destroy_image(all->e->mlx, all->e->img);
 	ft_bzero(&all, sizeof(t_all));

@@ -66,8 +66,8 @@ void			ft_parce_file(t_all *all)
 			all->map[all->j][all->i] = ft_atoi(all->tmp[all->i]);
 		}
 		all->taille[all->j] = all->i;
-		free_tab(all->tmp);
 		free(all->line);
+		free_tab(all->tmp);
 		all->j += 1;
 	}
 	all->map[all->j] = NULL;
@@ -79,7 +79,7 @@ int				ft_tile_screen(t_all *all)
 	{
 		mlx_put_image_to_window(all->e->mlx, all->e->win, all->tile, 0, 0);
 		if (all->loop < 40)
-			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100, RED,
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100, BLUE,
 			"PRESS ANY KEY TO START");
 		system("killall afplay 2&>/dev/null >/dev/null\n \
 		afplay ./song/lac.mp3&");
@@ -110,7 +110,6 @@ int				main(int argc, char **argv)
 	mlx_hook(env.win, 2, (1L << 0), key_press, &all);
 	mlx_hook(env.win, 3, (1L << 1), key_release, &all);
 	mlx_hook(env.win, 17, (1L << 17), proper_exit, &all);
-
 	mlx_loop(env.mlx);
 	return (EXIT_SUCCESS);
 }

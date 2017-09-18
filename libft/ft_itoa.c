@@ -73,5 +73,6 @@ char					*ft_itoa(int n)
 			return (NULL);
 		str = ft_nb_to_str(n, str, len);
 	}
+	free(str);
 	return (str);
 }

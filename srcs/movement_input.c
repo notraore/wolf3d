@@ -20,11 +20,11 @@ void		hand_movement(t_all *all)
 		all->mima = 70;
 	}
 	if (all->hand_h <= all->mima && (all->up == 1 || all->down == 1))
-		all->hand_h += 9;
+		all->hand_h += 3;
 	if (all->hand_h >= all->mima && (all->up == 1 || all->down == 1))
 	{
 		all->mima = 0;
-		all->hand_h -= 9;
+		all->hand_h -= 3;
 	}
 }
 
