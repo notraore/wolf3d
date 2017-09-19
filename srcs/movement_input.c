@@ -32,11 +32,11 @@ void		forward_vector(t_all *all)
 {
 	if (all->up == 1)
 	{
-		if (all->map[(int)(all->p->posx + all->p->dirx * all->p->movespeed)]
-		[(int)(all->p->posy)] == 0)
+		if (!(all->map[(int)(all->p->posx + all->p->dirx * all->p->movespeed)]
+		[(int)(all->p->posy)]))
 			all->p->posx += all->p->dirx * all->p->movespeed;
-		if (all->map[(int)(all->p->posx)][(int)(all->p->posy + all->p->diry
-		* all->p->movespeed)] == 0)
+		if (!(all->map[(int)(all->p->posx)][(int)(all->p->posy + all->p->diry
+		* all->p->movespeed)]))
 			all->p->posy += all->p->diry * all->p->movespeed;
 	}
 	hand_movement(all);
@@ -46,11 +46,11 @@ void		back_vector(t_all *all)
 {
 	if (all->down == 1)
 	{
-		if (all->map[(int)(all->p->posx + all->p->dirx * all->p->movespeed)]
-		[(int)(all->p->posy)] == 0)
+		if (!(all->map[(int)(all->p->posx - all->p->dirx * all->p->movespeed)]
+		[(int)(all->p->posy)]))
 			all->p->posx -= all->p->dirx * all->p->movespeed;
-		if (all->map[(int)(all->p->posx)][(int)(all->p->posy + all->p->diry
-		* all->p->movespeed)] == 0)
+		if (!(all->map[(int)(all->p->posx)][(int)(all->p->posy - all->p->diry
+		* all->p->movespeed)]))
 			all->p->posy -= all->p->diry * all->p->movespeed;
 	}
 	hand_movement(all);

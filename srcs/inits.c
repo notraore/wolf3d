@@ -21,32 +21,35 @@ void			ft_mlx(t_all *all)
 	&(all->e->bpp), &(all->e->sl), &(all->e->end));
 }
 
-void			all_init(t_all *all, int x)
+void			init_screen(t_all *all, int x)
+{
+	all->p->camx = 2 * x / (double)W - 1;
+	all->p->rayposx = all->p->posx;
+	all->p->rayposy = all->p->posy;
+	all->p->raydirx = all->p->dirx + all->p->planex * all->p->camx;
+	all->p->raydiry = all->p->diry + all->p->planey * all->p->camx;
+}
+
+void			init_map(t_all *all)
 {
 	all->m->mapx = (int)all->p->rayposx;
 	all->m->mapy = (int)all->p->rayposy;
-	all->p->camx = 2 * x / (double)W - 1;
-	all->p->raydirx = all->p->dirx + all->p->planex * all->p->camx;
-	all->p->raydiry = all->p->diry + all->p->planey * all->p->camx;
 	all->m->deltadistx = sqrt(1 + (all->p->raydiry * all->p->raydiry)
 	/ (all->p->raydirx * all->p->raydirx));
 	all->m->deltadisty = sqrt(1 + (all->p->raydirx * all->p->raydirx)
 	/ (all->p->raydiry * all->p->raydiry));
 	all->m->hit = 0;
-	all->m->side = -1;
-	all->m->perpwalldist = -1;
 }
 
 void			init_player(t_all *all)
 {
-	all->hide_map = 1;
 	all->p->dirx = -1;
 	all->p->diry = 0;
 	all->p->planex = 0;
 	all->p->planey = 0.66;
-	all->time = clock();
-	all->p->movespeed = 0.05;
-	all->p->rotspeed = 0.05;
+	all->hide_map = 1;
+	all->time = 0;
+	all->oldtime = 0;
 	all->reticule = 5;
 	all->radar = 100;
 	all->ammo = 300;

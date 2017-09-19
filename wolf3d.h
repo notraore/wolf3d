@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nghaddar <nghaddar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 17:15:20 by nghaddar          #+#    #+#             */
-/*   Updated: 2017/09/09 21:51:29 by nghaddar         ###   ########.fr       */
+/*   Created: 2017/09/09 17:15:20 by notraore          #+#    #+#             */
+/*   Updated: 2017/09/09 21:51:29 by notraore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_coords		t_coords;
 
 struct						s_ply
 {
-	double					fps;
 	double					camx;
 	double					posx;
 	double					posy;
@@ -62,18 +61,18 @@ struct						s_ply
 
 struct						s_map
 {
-	int						hit;
-	int						clr;
 	int						mapx;
 	int						mapy;
-	int						side;
-	int						stepx;
-	int						stepy;
 	double					sidedistx;
 	double					sidedisty;
 	double					deltadistx;
 	double					deltadisty;
 	double					perpwalldist;
+	int						stepx;
+	int						stepy;
+	int						side;
+	int						hit;
+	int						clr;
 };
 
 struct						s_draw
@@ -125,6 +124,10 @@ struct						s_all
 	int						x1;
 	int						y1;
 
+	int						lineheight;
+	int						drawstart;
+	int						drawend;
+
 	int						cirx;
 	int						ciry;
 	int						cirdx;
@@ -153,7 +156,6 @@ struct						s_all
 	int						*img_datas;
 	clock_t					time;
 	clock_t					oldtime;
-	clock_t					frame_time;
 
 	int						up;
 	int						down;
@@ -195,6 +197,7 @@ void						ray_lenght(t_all *all);
 void						ray_draw(t_all *all, int x);
 void						raycast(t_all *all);
 int							ft_loop(t_all *all);
+void						calc_dist(t_all *all);
 
 /*
 **error.c
@@ -208,7 +211,8 @@ void						check_file(t_all *all);
 **inits.c
 */
 void						ft_mlx(t_all *all);
-void						all_init(t_all *all, int x);
+void						init_screen(t_all *all, int x);
+void						init_map(t_all *all);
 void						init_player(t_all *all);
 
 /*

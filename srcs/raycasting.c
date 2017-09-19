@@ -56,31 +56,27 @@ void		ray_lenght(t_all *all)
 			all->m->mapy += all->m->stepy;
 			all->m->side = 1;
 		}
-		if (all->map[all->m->mapx][all->m->mapy] != 0)
+		if (all->map[all->m->mapx][all->m->mapy] > 0)
 			all->m->hit = 1;
 	}
+}
+
+void		ray_draw(t_all *all, int x)
+{
 	if (all->m->side == 0)
 		all->m->perpwalldist = (all->m->mapx - all->p->rayposx +
 		(1 - all->m->stepx) / 2) / all->p->raydirx;
 	else
 		all->m->perpwalldist = (all->m->mapy - all->p->rayposy +
 		(1 - all->m->stepy) / 2) / all->p->raydiry;
-}
-
-void		ray_draw(t_all *all, int x)
-{
-	int lineheight;
-	int drawstart;
-	int drawend;
-
-	lineheight = (int)(H / all->m->perpwalldist);
-	drawstart = -lineheight / 2 + H / 2;
-	if (drawstart < 0)
-		drawstart = 0;
-	drawend = lineheight / 2 + H / 2;
-	if (drawend >= H)
-		drawend = H - 1;
-	ft_line(all, x, drawstart, drawend);
+	all->lineheight = (int)(H / all->m->perpwalldist);
+	all->drawstart = -all->lineheight / 2 + H / 2;
+	if (all->drawstart < 0)
+		all->drawstart = 0;
+	all->drawend = all->lineheight / 2 + H / 2;
+	if (all->drawend >= H)
+		all->drawend = H - 1;
+	ft_line(all, x, all->drawstart, all->drawend);
 }
 
 void		raycast(t_all *all)
@@ -88,31 +84,35 @@ void		raycast(t_all *all)
 	int x;
 
 	x = -1;
-	all->p->rayposx = all->p->posx;
-	all->p->rayposy = all->p->posy;
+	move(all);
+	all->time = clock();
 	if (all->go == 1)
 	{
 		while (++x < W)
 		{
-			all_init(all, x);
+			init_screen(all, x);
+			init_map(all);
 			step_side_nbr(all);
 			ray_lenght(all);
 			ray_draw(all, x);
 			hud_loop_update(all);
 		}
+		all->oldtime = all->time;
+		all->time = clock();
+		all->p->movespeed = 10 * ((double)(all->time - all->oldtime)
+		/ CLOCKS_PER_SEC);
+		all->p->rotspeed = 5 * ((double)(all->time - all->oldtime)
+		/ CLOCKS_PER_SEC);
 	}
 }
 
 int			ft_loop(t_all *all)
 {
-	all->oldtime = all->time;
-	all->time = clock();
-	all->frame_time = (all->time - all->oldtime) / 1000.0;
+	ft_tile_screen(all);
 	if (all->go == 1)
 	{
 		if (all->radar > 0)
 		{
-			move(all);
 			raycast(all);
 		}
 		if (all->hide_map == 1)

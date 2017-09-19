@@ -3,9 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nghaddar <nghaddar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: notraore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/09 17:18:52 by nghaddar          #+#    #+#             */
+/*   Created: 2017/09/09 17:18:52 by notraore          #+#    #+#             */
 /*   Updated: 2017/09/11 19:10:25 by notraore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -78,11 +78,10 @@ int				ft_tile_screen(t_all *all)
 	if (all->go == 0)
 	{
 		mlx_put_image_to_window(all->e->mlx, all->e->win, all->tile, 0, 0);
-		if (all->loop < 40)
-			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100, BLUE,
-			"PRESS ANY KEY TO START");
-		system("killall afplay 2&>/dev/null >/dev/null\n \
-		afplay ./song/lac.mp3&");
+		if (all->loop < 50)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100,
+			WHITE, "PRESS ANY KEY TO START");
+		all->loop = all->loop >= 100 ? 0 : all->loop + 1;
 	}
 	return (0);
 }
@@ -103,8 +102,8 @@ int				main(int argc, char **argv)
 	check_file(&all);
 	ft_mlx(&all);
 	init_player(&all);
-	ft_draw_minimap(&all);
-	ft_tile_screen(&all);
+	system("killall afplay 2&>/dev/null >/dev/null\n \
+	afplay ./song/lac.mp3&");
 	all.m = &map;
 	mlx_loop_hook(all.e->mlx, ft_loop, &all);
 	mlx_hook(env.win, 2, (1L << 0), key_press, &all);
