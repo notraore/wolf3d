@@ -49,15 +49,15 @@ void			ft_parce_file(t_all *all)
 	if (!(all->i = open_close_fd(all)))
 		ft_kill("Map doesn't exist. Please, enter a valid map name.");
 	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
-	all->map = (int **)ft_memalloc(sizeof(int *) * all->i + 1);
-	all->taille = (int *)ft_memalloc(sizeof(int) * all->i + 1);
+	all->map = (int **)malloc(sizeof(int *) * all->i + 1);
+	all->taille = (int *)malloc(sizeof(int) * all->i + 1);
 	all->i = 0;
 	while ((all->value = get_next_line(all->fd, &all->line)) == 1)
 	{
 		all->tmp = ft_strsplit(all->line, ' ');
 		while (all->tmp[all->i++])
 			all->i += 1;
-		all->map[all->j] = ft_memalloc(sizeof(int) * all->i + 1);
+		all->map[all->j] = malloc(sizeof(int) * all->i + 1);
 		all->i = -1;
 		while (all->tmp[all->i += 1])
 		{
@@ -70,18 +70,17 @@ void			ft_parce_file(t_all *all)
 		free_tab(all->tmp);
 		all->j += 1;
 	}
-	all->map[all->j] = NULL;
 }
 
 int				ft_tile_screen(t_all *all)
 {
-	if (all->go == 0)
+	if (all->go == 0 && all->game == 0)
 	{
 		mlx_put_image_to_window(all->e->mlx, all->e->win, all->tile, 0, 0);
-		if (all->loop < 50)
+		if (all->loop <= 40)
 			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100,
 			WHITE, "PRESS ANY KEY TO START");
-		all->loop = all->loop >= 100 ? 0 : all->loop + 1;
+		all->loop = all->loop >= 80 ? 0 : all->loop + 1;
 	}
 	return (0);
 }
@@ -95,6 +94,7 @@ int				main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_print_err(argc);
+	ft_bzero(&all, sizeof(t_all));
 	all.e = &env;
 	all.argv = argv[1];
 	all.p = &player;

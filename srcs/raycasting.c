@@ -81,27 +81,28 @@ void		ray_draw(t_all *all, int x)
 
 void		raycast(t_all *all)
 {
-	int x;
-
-	x = -1;
+	all->x = 0;
 	move(all);
 	all->time = clock();
 	if (all->go == 1)
 	{
-		while (++x < W)
+		while (all->x < W)
 		{
-			init_screen(all, x);
+			init_screen(all, all->x);
 			init_map(all);
 			step_side_nbr(all);
 			ray_lenght(all);
-			ray_draw(all, x);
+			ray_draw(all, all->x);
 			hud_loop_update(all);
+			all->x += 1;
 		}
 		all->oldtime = all->time;
 		all->time = clock();
 		all->p->movespeed = 10 * ((double)(all->time - all->oldtime)
 		/ CLOCKS_PER_SEC);
 		all->p->rotspeed = 5 * ((double)(all->time - all->oldtime)
+		/ CLOCKS_PER_SEC);
+		all->fps = 60 / ((double)(all->time - all->oldtime)
 		/ CLOCKS_PER_SEC);
 	}
 }
@@ -111,10 +112,9 @@ int			ft_loop(t_all *all)
 	ft_tile_screen(all);
 	if (all->go == 1)
 	{
+		all->game += 1;
 		if (all->radar > 0)
-		{
 			raycast(all);
-		}
 		if (all->hide_map == 1)
 			ft_draw_minimap(all);
 		ft_map_reticule_hud(all);
@@ -123,6 +123,8 @@ int			ft_loop(t_all *all)
 			mlx_put_image_to_window(all->e->mlx, all->e->win, all->gun_0, W / 2
 			+ (all->hand_h / 2), 400 + all->hand_h);
 		loop_hud(all);
+		mlx_string_put(all->e->mlx, all->e->win, 55, 10,
+		WHITE, ft_itoa(all->fps));
 		if (all->radar <= 0)
 			ft_game_over(all);
 		if ((int)all->p->posx == 3)

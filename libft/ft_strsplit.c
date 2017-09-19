@@ -20,7 +20,7 @@ char	**ft_strsplit(char const *s, char c)
 	if (!s || !c)
 		return (NULL);
 	nb = ft_strcount(s, c);
-	if (!(tab = malloc(sizeof(char *) * (nb + 1))))
+	if (!(tab = ft_memalloc(sizeof(char *) * (nb + 1))))
 		return (NULL);
 	tab = ft_split(s, c, tab);
 	tab[nb] = NULL;

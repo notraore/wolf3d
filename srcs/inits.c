@@ -52,5 +52,5 @@ void			init_player(t_all *all)
 	all->oldtime = 0;
 	all->reticule = 5;
 	all->radar = 100;
-	all->ammo = 300;
+	all->ammo = 3;
 }

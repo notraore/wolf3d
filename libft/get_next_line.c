@@ -102,8 +102,10 @@ int					get_next_line(int const fd, char **line)
 	}
 	if (ds->str != 0 && ft_strlen(ds->str) != 0 && (*line = ft_strdup(ds->str)))
 	{
+		free(ds->str);
 		ds->str = NULL;
 		return (1);
 	}
 	return (ds->ret);
 }
+

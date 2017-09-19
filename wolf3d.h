@@ -101,8 +101,10 @@ struct						s_all
 {
 	int						i;
 	int						j;
+	int						x;
 	int						fd;
 	int						clr;
+	int						fps;
 	int						**map;
 	int						value;
 	int						*taille;

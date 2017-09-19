@@ -40,6 +40,14 @@ void			ft_print_player_pos_error(t_all *all)
 	}
 }
 
+void			map_size(t_all *all)
+{
+	if (all->j <= 2)
+		ft_kill("Map need to have at least 3 or more lines.");
+	if (*all->taille <= 2)
+		ft_kill("Map need to have at least 3 or more columns.");
+}
+
 void			check_file(t_all *all)
 {
 	int i;
@@ -55,15 +63,14 @@ void			check_file(t_all *all)
 		while (i < all->i)
 		{
 			if (j == 0 || j == all->j)
-			{
-				if (all->map[j][i] == 0)
+				if (all->map[j][i] != 1 || all->map[all->j - 1][i] != 1)
 					ft_kill("Map not well closed. Please check map borders.");
-			}
-			if (all->map[j][0] == 0 || all->map[j][last] == 0)
+			if (all->map[j][0] != 1 || all->map[j][last] != 1)
 				ft_kill("Map not well closed. Please check map borders.");
 			i++;
 		}
 		j++;
 	}
+	map_size(all);
 	ft_print_player_pos_error(all);
 }
