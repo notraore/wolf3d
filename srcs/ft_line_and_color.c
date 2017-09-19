@@ -18,18 +18,22 @@ int			get_color(t_all *all)
 	{
 		if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 			(all->m->stepx == 1 && all->m->stepy == -1))
-			return (FBLUE);
+			return (BLUE * 0.25);
 		if ((all->m->stepx == -1 && all->m->stepy == 1) ||
 			(all->m->stepx == 1 && all->m->stepy == 1))
-			return (BLUE);
+			return (BLUE / 2);
 	}
 	if ((all->m->stepx == -1 && all->m->stepy == -1) ||
 		(all->m->stepx == -1 && all->m->stepy == 1))
-		return (BLUE / 2);
+		return (BLUE);
 	else
-		return (FBLUE / 2);
+		return (FBLUE * 0.15);
 	return (0);
 }
+
+/*
+**return (BLUE / 0.95 / (all->m->deltadistx + all->m->deltadistx) * 0.85);
+*/
 
 void		ft_line(t_all *all, int x, int start, int end)
 {

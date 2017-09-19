@@ -31,6 +31,7 @@ void		step_side_nbr(t_all *all)
 		all->m->stepy = -1;
 		all->m->sidedisty = (all->p->rayposy - all->m->mapy)
 		* all->m->deltadisty;
+
 	}
 	else
 	{

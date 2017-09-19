@@ -58,7 +58,7 @@ void			ft_map_reticule_hud(t_all *all)
 
 void			hud_loop_update(t_all *all)
 {
-	all->radar -= 0.00006;
+	// all->radar -= 0.00006;
 	if (all->reticule > 5)
 		all->reticule -= 0.001;
 }

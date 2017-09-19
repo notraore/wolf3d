@@ -150,7 +150,7 @@ struct						s_all
 	void					*infini;
 	void					*tile;
 	void					*over;
-	unsigned int			ammo;
+	size_t					ammo;
 
 	int						sl;
 	int						bpp;
