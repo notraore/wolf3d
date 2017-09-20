@@ -49,15 +49,15 @@ void			ft_parce_file(t_all *all)
 	if (!(all->i = open_close_fd(all)))
 		ft_kill("Map doesn't exist. Please, enter a valid map name.");
 	(!(all->fd = open(all->argv, O_RDONLY)) ? exit(-1) : 0);
-	all->map = (int **)malloc(sizeof(int *) * all->i + 1);
-	all->taille = (int *)malloc(sizeof(int) * all->i + 1);
+	all->map = (int **)ft_memalloc(sizeof(int *) * all->i + 1);
+	all->taille = (int *)ft_memalloc(sizeof(int) * all->i + 1);
 	all->i = 0;
 	while ((all->value = get_next_line(all->fd, &all->line)) == 1)
 	{
 		all->tmp = ft_strsplit(all->line, ' ');
 		while (all->tmp[all->i++])
 			all->i += 1;
-		all->map[all->j] = malloc(sizeof(int) * all->i + 1);
+		all->map[all->j] = ft_memalloc(sizeof(int) * all->i + 1);
 		all->i = -1;
 		while (all->tmp[all->i += 1])
 		{
@@ -79,7 +79,7 @@ int				main(int argc, char **argv)
 	t_map		map;
 	t_all		all;
 
-	if (argc != 2)
+	if (argc != 2 || ft_strcmp(argv[1], "help") == 0)
 		ft_print_err(argc);
 	ft_bzero(&all, sizeof(t_all));
 	all.e = &env;

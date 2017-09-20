@@ -56,6 +56,8 @@ void			check_file(t_all *all)
 
 	i = 0;
 	j = 0;
+	if (ft_strcmp(all->argv, "help") == 0)
+		ft_help();
 	last = all->i - 1;
 	while (j < all->j)
 	{

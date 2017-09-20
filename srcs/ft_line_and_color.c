@@ -14,20 +14,23 @@
 
 int			get_color(t_all *all)
 {
+	int addition;
+
+	addition = all->m->deltadistx + all->m->deltadisty;
 	if (all->m->side == 1)
 	{
 		if ((all->m->stepx == -1 && all->m->stepy == -1) ||
-			(all->m->stepx == 1 && all->m->stepy == -1))
-			return (FBLUE / 0.95 / (all->m->deltadistx + all->m->deltadisty) * 0.85);
+		(all->m->stepx == 1 && all->m->stepy == -1))
+			return (FBLUE / 0.95 / (addition) * 0.85);
 		if ((all->m->stepx == -1 && all->m->stepy == 1) ||
-			(all->m->stepx == 1 && all->m->stepy == 1))
-			return (ORG / 0.95 / (all->m->deltadistx + all->m->deltadisty) * 0.85);
+		(all->m->stepx == 1 && all->m->stepy == 1))
+			return (ORG / 0.95 / (addition) * 0.85);
 	}
 	if ((all->m->stepx == -1 && all->m->stepy == -1) ||
-		(all->m->stepx == -1 && all->m->stepy == 1))
-		return (FBLUE * 0.95 / (all->m->deltadistx + all->m->deltadisty) * 0.85);
+	(all->m->stepx == -1 && all->m->stepy == 1))
+		return (FBLUE * 0.95 / (addition) * 0.85);
 	else
-		return (FBLUE / 0.95 / (all->m->deltadistx + all->m->deltadisty) * 0.85);
+		return (FBLUE / 0.95 / (addition) * 0.85);
 	return (0);
 }
 
@@ -49,10 +52,6 @@ int			get_color_2(t_all *all)
 		return (FBLUE);
 	return (0);
 }
-
-/*
-**return (BLUE / 0.95 / (all->m->deltadistx + all->m->deltadistx) * 0.85);
-*/
 
 void		ft_line(t_all *all, int x, int start, int end)
 {
