@@ -39,7 +39,8 @@ void		fire_shot(t_all *all)
 	{
 		fire_reticule(all);
 		all->ammo -= 1;
-		all->radar += 30;
+		if (all->compet == 1)
+			all->radar += 30;
 	}
 	else
 		system("afplay ./song/empty.mp3&");
@@ -47,30 +48,25 @@ void		fire_shot(t_all *all)
 
 int			key_press(int keycode, t_all *all)
 {
-	if (keycode == 49 && all->go == 1)
+	if (keycode == 49 && all->go == 2)
 		fire_shot(all);
 	if (keycode == 53)
 		proper_exit(all);
-	if ((keycode == 13 || keycode == 126) && all->go == 1)
+	if ((keycode == 13 || keycode == 126) && all->go == 2)
 		all->up = 1;
-	if ((keycode == 1 || keycode == 125) && all->go == 1)
+	if ((keycode == 1 || keycode == 125) && all->go == 2)
 		all->down = 1;
-	if ((keycode == 2 || keycode == 124) && all->go == 1)
+	if ((keycode == 2 || keycode == 124) && all->go == 2)
 		all->right = 1;
-	if ((keycode == 0 || keycode == 123) && all->go == 1)
+	if ((keycode == 0 || keycode == 123) && all->go == 2)
 		all->left = 1;
-	if (keycode == 46 && all->go == 1)
+	if (keycode == 46 && all->go == 2)
 		all->hide_map = all->hide_map == 1 ? 0 : 1;
-	if (keycode == 4 && all->go == 1)
+	if (keycode == 4 && all->go == 2)
 		all->hide_hud = all->hide_hud == 1 ? 0 : 1;
+	menu(keycode, all);
 	if (all->go == 0 && all->game == 0)
-	{
 		all->go = 1;
-		all->game = 1;
-		system("killall afplay 2&>/dev/null >/dev/null\n \
-		afplay ./song/ingame.mp3&");
-		mlx_destroy_image(all->e->mlx, all->tile);
-	}
 	return (0);
 }
 

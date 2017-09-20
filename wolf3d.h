@@ -105,6 +105,9 @@ struct						s_all
 	int						fd;
 	int						clr;
 	int						fps;
+	int						tips;
+	int						arrpos;
+	int						compet;
 	int						**map;
 	int						value;
 	int						*taille;
@@ -150,6 +153,8 @@ struct						s_all
 	void					*infini;
 	void					*tile;
 	void					*over;
+	void					*mainmenu;
+	void					*arrow;
 	size_t					ammo;
 
 	int						sl;
@@ -180,7 +185,6 @@ struct						s_all
 int							open_close_fd(t_all *all);
 void						ft_player_position(t_all *all, int x, int y);
 void						ft_parce_file(t_all *all);
-int							ft_tile_screen(t_all *all);
 
 /*
 **movement_input.c
@@ -221,6 +225,7 @@ void						init_player(t_all *all);
 **ft_line_and_color.c
 */
 int							get_color(t_all *all);
+int							get_color_2(t_all *all);
 void						ft_line(t_all *all, int x, int start, int end);
 
 /*
@@ -254,9 +259,18 @@ void						fire_reticule(t_all *all);
 void						loop_hud(t_all *all);
 void						ft_game_over(t_all *all);
 void						ft_ggwp(t_all *all);
+void						display_help(t_all *all);
+void						display_tips(t_all *all);
 /*
 **load_texture.c
 */
 void						load_texture_pack(t_all *all);
+void						load_texture_pack_2(t_all *all);
+
+/*
+**menu.c
+*/
+void						menu(int keycode, t_all *all);
+int							ft_tile_screen(t_all *all);
 
 #endif

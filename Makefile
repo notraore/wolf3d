@@ -14,12 +14,12 @@ NAME=wolf3d
 CC=gcc
 SRC=srcs/main.c srcs/keyboard.c srcs/inits.c srcs/ft_line_and_color.c\
 srcs/raycasting.c srcs/movement_input.c srcs/errors.c\
-srcs/draw_formes.c srcs/hud.c srcs/load_texture.c srcs/hud_2.c
+srcs/draw_formes.c srcs/hud.c srcs/load_texture.c srcs/hud_2.c srcs/menu.c
 OBJ=main.o movement_input.o inits.o ft_line_and_color.o raycasting.o keyboard.o\
-draw_formes.o errors.o hud.o load_texture.o hud_2.o
-FLAGS=-Wall -Wextra -Werror -g
+draw_formes.o errors.o hud.o load_texture.o hud_2.o menu.o
+FLAGS=-Wall -Wextra -Werror
 LIB=-L ./libft -lft
-MLX=-L ./miniLibx -lmlx -framework OpenGL -framework AppKit
+MLX=-L ./miniLibx_macos -lmlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 

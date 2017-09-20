@@ -72,19 +72,6 @@ void			ft_parce_file(t_all *all)
 	}
 }
 
-int				ft_tile_screen(t_all *all)
-{
-	if (all->go == 0 && all->game == 0)
-	{
-		mlx_put_image_to_window(all->e->mlx, all->e->win, all->tile, 0, 0);
-		if (all->loop <= 40)
-			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 110, H - 100,
-			WHITE, "PRESS ANY KEY TO START");
-		all->loop = all->loop >= 80 ? 0 : all->loop + 1;
-	}
-	return (0);
-}
-
 int				main(int argc, char **argv)
 {
 	t_ply		player;

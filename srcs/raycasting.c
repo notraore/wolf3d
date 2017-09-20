@@ -31,7 +31,6 @@ void		step_side_nbr(t_all *all)
 		all->m->stepy = -1;
 		all->m->sidedisty = (all->p->rayposy - all->m->mapy)
 		* all->m->deltadisty;
-
 	}
 	else
 	{
@@ -85,7 +84,7 @@ void		raycast(t_all *all)
 	all->x = 0;
 	move(all);
 	all->time = clock();
-	if (all->go == 1)
+	if (all->go == 2)
 	{
 		while (all->x < W)
 		{
@@ -111,7 +110,7 @@ void		raycast(t_all *all)
 int			ft_loop(t_all *all)
 {
 	ft_tile_screen(all);
-	if (all->go == 1)
+	if (all->go == 2)
 	{
 		all->game += 1;
 		if (all->radar > 0)
@@ -128,7 +127,7 @@ int			ft_loop(t_all *all)
 		WHITE, ft_itoa(all->fps));
 		if (all->radar <= 0)
 			ft_game_over(all);
-		if ((int)all->p->posx == 3)
+		if ((int)all->p->posx == 3 && all->compet == 1)
 			ft_ggwp(all);
 	}
 	return (0);

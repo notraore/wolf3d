@@ -39,3 +39,14 @@ void			load_texture_pack(t_all *all)
 	"./Textures/gameover.xpm", &(all->e->sl), &all->e->bpp))))
 		ft_kill("Texture error");
 }
+
+void			load_texture_pack_2(t_all *all)
+{
+	load_texture_pack(all);
+	if (!((all->mainmenu = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/mainmenu.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+	if (!((all->arrow = mlx_xpm_file_to_image(all->e->mlx,
+	"./Textures/arrow.xpm", &(all->e->sl), &all->e->bpp))))
+		ft_kill("Texture error");
+}

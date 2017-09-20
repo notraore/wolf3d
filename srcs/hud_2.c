@@ -30,8 +30,9 @@ void			loop_hud(t_all *all)
 {
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->blaz_f, W - 100, 0);
 	mlx_put_image_to_window(all->e->mlx, all->e->win, all->bullet, 0, H - 100);
-	mlx_string_put(all->e->mlx, all->e->win, W / 2 - 200, 30, WHITE,
-	"Get to the other side of the map, youre at the bottom.");
+	if (all->compet)
+		mlx_string_put(all->e->mlx, all->e->win, W / 2 - 200, 30, WHITE,
+		"Get to the other side of the map, youre at the bottom.");
 	mlx_string_put(all->e->mlx, all->e->win, 35, H - 62, WHITE,
 	ft_itoa(all->ammo));
 }
@@ -47,4 +48,53 @@ void			ft_ggwp(t_all *all)
 	all->e->img, 0, 0);
 	all->go = 0;
 	system("afplay ./song/yay.mp3&");
+}
+
+void			display_tips(t_all *all)
+{
+	if (all->go == 1)
+	{
+		if (all->tips < 1000 )
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Blue walls are heading north.");
+		else if (all->tips < 2000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Enjoy the music ? Finish the competition mode to see credit.");
+		else if (all->tips < 3000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : In competition mode, shot a bullet add time to the timer.");
+		else if (all->tips < 4000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Blue walls are heading north.");
+		else if (all->tips < 5000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Blue walls are heading north.");
+		else if (all->tips < 6000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Blue walls are heading north.");
+		else if (all->tips < 7000)
+			mlx_string_put(all->e->mlx, all->e->win, W / 2 - 150, H - 30,
+			RED, "Tips : Blue walls are heading north.");
+	}
+	all->tips = (all->tips <= 7000) ? all->tips + 1 : 0;
+	printf("%d\n", all->tips);
+}
+
+void			display_help(t_all *all)
+{
+	if (all->arrpos == 0 && all->go == 1)
+		mlx_string_put(all->e->mlx, all->e->win, 40, 250 + all->arrpos,
+		WHITE, "300 ammo - No timer - No objectif - Just enjoy");
+	if (all->arrpos == 100 && all->go == 1)
+	{
+		mlx_string_put(all->e->mlx, all->e->win, 15, H - 410,
+		WHITE, "You start at the bottom of the map, you must reach the");
+		mlx_string_put(all->e->mlx, all->e->win, 15, H - 380,
+		WHITE, "top before the time goes to 0. You have 3 bullets");
+		mlx_string_put(all->e->mlx, all->e->win, 15, H - 350,
+		WHITE, "shot one bullet with space get additional time to your timer.");
+		mlx_string_put(all->e->mlx, all->e->win, 15, H - 290,
+		RED, "Disturbing Wall Texture (Epilepsy warning)");
+	}
+	display_tips(all);
 }

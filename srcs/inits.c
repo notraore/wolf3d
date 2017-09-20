@@ -15,7 +15,7 @@
 void			ft_mlx(t_all *all)
 {
 	all->e->mlx = mlx_init();
-	load_texture_pack(all);
+	load_texture_pack_2(all);
 	all->e->win = mlx_new_window(all->e->mlx, W, H, "WOLF3D");
 	all->e->img_datas = (int *)mlx_get_data_addr(all->e->img,
 	&(all->e->bpp), &(all->e->sl), &(all->e->end));
@@ -52,5 +52,4 @@ void			init_player(t_all *all)
 	all->oldtime = 0;
 	all->reticule = 5;
 	all->radar = 100;
-	all->ammo = 3;
 }
