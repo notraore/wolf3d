@@ -12,7 +12,7 @@
 This is a school projet : We had to use the raycasting method to create a wolfenstein 3d type game.<br />
 Create your map using 0 for walkable floor and 1 for walls.<br />
 
-<h3>Usage :</h3> `make`<br />
+Usage : `make`<br />
 `./wolf3d maps/[map]`
 
 ![screen shot 2018-02-27 at 1 57 30 pm](https://user-images.githubusercontent.com/27351943/36730714-b5a95b22-1bc8-11e8-97e8-c7e872d8529b.png)
